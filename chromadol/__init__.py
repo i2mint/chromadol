@@ -88,8 +88,8 @@ You can read or write one document at a time too.
 >>> collection['cake'] = {
 ...     "documents": "contents for cake",
 ... }
->>> list(collection)
-['piece', 'of', 'cake']
+>>> sorted(collection)  # sorting because order is not guaranteed
+['cake', 'of', 'piece']
 >>> assert collection['cake'] == {
 ...     'ids': ['cake'],
 ...     'embeddings': None,

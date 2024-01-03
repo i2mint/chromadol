@@ -61,7 +61,7 @@ def test_simple():
     collection['cake'] = {
         "documents": "contents for cake",
     }
-    assert list(collection) == ['piece', 'of', 'cake']
+    assert set(collection) == {'piece', 'of', 'cake'}
     assert collection['cake'] == {
         'ids': ['cake'],
         'embeddings': None,
