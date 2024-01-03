@@ -99,6 +99,7 @@ class FileLoader(DataLoader[List[Optional[FileContents]]]):
             uris = [uris]
         return vectorize(self._load_file, uris, max_workers=self._max_workers)
 
+
 # add a few loaders as attributes, for convenience
 FileLoader.load_text = load_text
 FileLoader.load_bytes = load_bytes
