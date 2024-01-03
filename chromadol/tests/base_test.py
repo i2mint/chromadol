@@ -7,10 +7,10 @@ from chromadol.base import ChromaClient
 def test_simple():
     """A simple test of the ChromaClient and ChromaCollection classes."""
 
-    
-    import tempfile, os 
+    import tempfile, os
+
     with tempfile.TemporaryDirectory() as temp_dir:
-        tempdir = os.path.join(temp_dir, "chromadol_test")
+        tempdir = os.path.join(temp_dir, 'chromadol_test')
         os.makedirs(tempdir)
     client = ChromaClient(tempdir)
 
@@ -39,19 +39,23 @@ def test_simple():
 
     assert sorted(collection) == ['of', 'piece']
 
-    assert collection['piece'] == {'ids': ['piece'],
-    'embeddings': None,
-    'metadatas': [{'author': 'me'}],
-    'documents': ['contents for piece'],
-    'uris': None,
-    'data': None}
+    assert collection['piece'] == {
+        'ids': ['piece'],
+        'embeddings': None,
+        'metadatas': [{'author': 'me'}],
+        'documents': ['contents for piece'],
+        'uris': None,
+        'data': None,
+    }
 
-    assert collection['of'] == {'ids': ['of'],
-    'embeddings': None,
-    'metadatas': [{'author': 'you'}],
-    'documents': ['contents for of'],
-    'uris': None,
-    'data': None}
+    assert collection['of'] == {
+        'ids': ['of'],
+        'embeddings': None,
+        'metadatas': [{'author': 'you'}],
+        'documents': ['contents for of'],
+        'uris': None,
+        'data': None,
+    }
 
     # You can also read multiple documents at once.
     # But note that the order of the documents is not guaranteed.
@@ -59,7 +63,7 @@ def test_simple():
 
     # But you can read or write one document at a time too.
     collection['cake'] = {
-        "documents": "contents for cake",
+        'documents': 'contents for cake',
     }
     assert set(collection) == {'piece', 'of', 'cake'}
     assert collection['cake'] == {
@@ -82,10 +86,9 @@ def test_simple():
         'data': None,
     }
 
-    # The `collection` instance is not only dict-like, but also list-like in the 
+    # The `collection` instance is not only dict-like, but also list-like in the
     # sense that it has an `.append` and an `.extend` method.
 
     assert len(collection) == 3
     collection.extend(['two documents', 'specified without keys'])
     assert len(collection) == 5
-

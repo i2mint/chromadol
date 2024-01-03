@@ -94,9 +94,7 @@ class ChromaClient(MutableMapping):
         ...     del chroma_client_instance[k]
 
         """
-        raise NotImplementedError("Disabled for safety reasons.")
-
-
+        raise NotImplementedError('Disabled for safety reasons.')
 
 
 def int_string(x):
