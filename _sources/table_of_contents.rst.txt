@@ -4,5 +4,6 @@
 
    module_docs/chromadol
    module_docs/chromadol/base
+   module_docs/chromadol/data_loaders
    module_docs/chromadol/tests
    module_docs/chromadol/tests/base_test
