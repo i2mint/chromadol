@@ -48,20 +48,42 @@ would be like this:
 ...     'documents': ['contents for piece', 'contents for of'],
 ...     'metadatas': [{'author': 'me'}, {'author': 'you'}],
 ... }
+
+Now we have two documents in the collection:
+
+>>> len(collection)
+2
+
+Note, though, that the order of the documents is not guaranteed.
+
 >>> sorted(collection)
 ['of', 'piece']
->>>
->>> assert collection[['piece', 'of']] == {
-...     'ids': ['piece', 'of'],
+
+>>> assert collection['piece'] == {
+...     'ids': ['piece'],
 ...     'embeddings': None,
-...     'metadatas': [{'author': 'me'}, {'author': 'you'}],
-...     'documents': ['contents for piece', 'contents for of'],
+...     'metadatas': [{'author': 'me'}],
+...     'documents': ['contents for piece'],
 ...     'uris': None,
-...     'data': None,
+...     'data': None
 ... }
 
+>>> assert collection['of'] == {
+...     'ids': ['of'],
+...     'embeddings': None,
+...     'metadatas': [{'author': 'you'}],
+...     'documents': ['contents for of'],
+...     'uris': None,
+...     'data': None
+... }
 
-But you can read or write one document at a time too.
+You can also read multiple documents at once.
+But note that the order of the documents is not guaranteed.
+
+>>> collection[['piece', 'of']] == collection[['of', 'piece']]
+True
+
+You can read or write one document at a time too.
 
 >>> collection['cake'] = {
 ...     "documents": "contents for cake",
