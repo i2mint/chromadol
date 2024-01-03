@@ -12,12 +12,12 @@ FileContents = Union[str, bytes]  # a type for the contents of a file
 
 
 def load_text(filepath: str) -> str:
-    with open(filepath, "r") as f:
+    with open(filepath, 'r') as f:
         return f.read()
 
 
 def load_bytes(filepath: str) -> bytes:
-    with open(filepath, "rb") as f:
+    with open(filepath, 'rb') as f:
         return f.read()
 
 
@@ -73,8 +73,8 @@ class FileLoader(DataLoader[List[Optional[FileContents]]]):
         self,
         loader=load_text,
         *,
-        prefix: str = "",
-        suffix: str = "",
+        prefix: str = '',
+        suffix: str = '',
         max_workers: int = multiprocessing.cpu_count(),
     ) -> None:
         """
@@ -92,7 +92,7 @@ class FileLoader(DataLoader[List[Optional[FileContents]]]):
     def _load_file(self, uri: Optional[URI]) -> Optional[FileContents]:
         if uri is None:
             return None
-        return self._loader(f"{self._prefix}{uri}{self._suffix}")
+        return self._loader(f'{self._prefix}{uri}{self._suffix}')
 
     def __call__(self, uris: Sequence[Optional[URI]]) -> List[Optional[FileContents]]:
         if isinstance(uris, str):
