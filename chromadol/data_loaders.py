@@ -3,8 +3,7 @@ import multiprocessing
 from typing import Optional, Sequence, List, Union
 from operator import attrgetter
 from chromadb.api.types import URI, DataLoader
-from concurrent.futures import ThreadPoolExecutor
-
+from chromadol.util import vectorize
 
 # --------------------------- Examples of loaders ---------------------------
 
@@ -66,7 +65,7 @@ class FileLoader(DataLoader[List[Optional[FileContents]]]):
     True
     >>> 'from typing import' in file_contents_1[1]  # i.e. types.py contains the phrase 'from typing import'
     True
-    
+
     """
 
     def __init__(
@@ -98,9 +97,7 @@ class FileLoader(DataLoader[List[Optional[FileContents]]]):
         if isinstance(uris, str):
             # To avoid a common mistake, we cast a string to a list of containing it
             uris = [uris]
-        with ThreadPoolExecutor(max_workers=self._max_workers) as executor:
-            return list(executor.map(self._load_file, uris))
-
+        return vectorize(self._load_file, uris, max_workers=self._max_workers)
 
 # add a few loaders as attributes, for convenience
 FileLoader.load_text = load_text

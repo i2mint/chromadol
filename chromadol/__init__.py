@@ -130,3 +130,5 @@ keys automatically:
 """
 
 from chromadol.base import ChromaCollection, ChromaClient
+from chromadol.data_loaders import FileLoader
+from chromadol.util import vectorize
