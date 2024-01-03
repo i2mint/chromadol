@@ -1,0 +1,8 @@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   module_docs/chromadol
+   module_docs/chromadol/base
+   module_docs/chromadol/tests
+   module_docs/chromadol/tests/base_test
