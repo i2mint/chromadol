@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chromadol.tests &mdash; chromadol 0.1.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <title>chromadol.util &mdash; chromadol 0.1.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
@@ -22,8 +22,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="chromadol.tests.base_test" href="tests/base_test.html" />
-    <link rel="prev" title="chromadol.data_loaders" href="data_loaders.html" /> 
+    <link rel="prev" title="chromadol.tests.base_test" href="tests/base_test.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,9 +49,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../chromadol.html">chromadol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="base.html">chromadol.base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_loaders.html">chromadol.data_loaders</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">chromadol.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">chromadol.tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tests/base_test.html">chromadol.tests.base_test</a></li>
-<li class="toctree-l1"><a class="reference internal" href="util.html">chromadol.util</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">chromadol.util</a></li>
 </ul>
 
         </div>
@@ -69,9 +68,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">chromadol.tests</li>
+      <li class="breadcrumb-item active">chromadol.util</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/module_docs/chromadol/tests.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/module_docs/chromadol/util.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -79,17 +78,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-chromadol.tests">
-<span id="chromadol-tests"></span><h1>chromadol.tests<a class="headerlink" href="#module-chromadol.tests" title="Permalink to this headline">¶</a></h1>
-<p>chromadol tests.</p>
+  <section id="module-chromadol.util">
+<span id="chromadol-util"></span><h1>chromadol.util<a class="headerlink" href="#module-chromadol.util" title="Permalink to this headline">¶</a></h1>
+<p>Utils for chromadol.</p>
+<dl class="py function">
+<dt id="chromadol.util.vectorize">
+<code class="sig-prename descclassname">chromadol.util.</code><code class="sig-name descname">vectorize</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">iterable</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">max_workers</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/chromadol/util.html#vectorize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chromadol.util.vectorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like builtin map, but returns a list,
+and if iterable is None, returns a partial function that can directly be applied
+to an iterable.
+This is useful, for instance, for making a data loader from any single-uri loader.</p>
+<p>Example:
+&gt;&gt;&gt; vectorize(lambda x: x**2, [1,2,3])
+[1, 4, 9]
+&gt;&gt;&gt; vectorized_square = vectorize(lambda x: x**2)
+&gt;&gt;&gt; vectorized_square([1,2,3])
+[1, 4, 9]</p>
+</dd></dl>
+
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="data_loaders.html" class="btn btn-neutral float-left" title="chromadol.data_loaders" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="tests/base_test.html" class="btn btn-neutral float-right" title="chromadol.tests.base_test" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tests/base_test.html" class="btn btn-neutral float-left" title="chromadol.tests.base_test" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
