@@ -29,7 +29,7 @@ def test_simple():
         'documents': ['contents for piece', 'contents for of'],
         'metadatas': [{'author': 'me'}, {'author': 'you'}],
     }
-    assert list(collection) == ['piece', 'of']
+    assert sorted(collection) == ['of', 'piece']
 
     assert collection[['piece', 'of']] == {
         'ids': ['piece', 'of'],
@@ -64,3 +64,11 @@ def test_simple():
         'uris': None,
         'data': None,
     }
+
+    # The `collection` instance is not only dict-like, but also list-like in the 
+    # sense that it has an `.append` and an `.extend` method.
+
+    assert len(collection) == 3
+    collection.extend(['two documents', 'specified without keys'])
+    assert len(collection) == 5
+

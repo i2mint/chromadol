@@ -48,8 +48,8 @@ would be like this:
 ...     'documents': ['contents for piece', 'contents for of'],
 ...     'metadatas': [{'author': 'me'}, {'author': 'you'}],
 ... }
->>> list(collection)
-['piece', 'of']
+>>> sorted(collection)
+['of', 'piece']
 >>>
 >>> assert collection[['piece', 'of']] == {
 ...     'ids': ['piece', 'of'],
@@ -90,6 +90,20 @@ you can just write a string instead of a dictionary:
 ...     'data': None,
 ... }
 
+The `collection` instance is not only dict-like, but also list-like in the 
+sense that it has an `.append` and an `.extend` method.
+
+>>> len(collection)
+3
+>>> collection.extend(['two documents', 'specified without keys'])
+>>> len(collection)
+5
+
+See that the two documents were added to the collection, and that they were assigned
+keys automatically:
+
+>>> list(collection)  # doctest: +SKIP
+['piece', 'of', 'cake', '1704294539590875904', '1704294539631522048']
 
 """
 
