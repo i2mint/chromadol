@@ -56,14 +56,17 @@ class FileLoader(DataLoader[List[Optional[FileContents]]]):
 
     Example:
 
+    >>> import chromadb
     >>> rootdir = chromadb.__path__[0] + '/'
     >>> file_loader_1 = FileLoader(prefix=rootdir)
     >>> file_contents_1 = file_loader_1(['__init__.py', 'types.py'])
     >>> len(file_contents_1)
     2
     >>> 'Embeddings' in file_contents_1[0]  # i.e. __init__.py contains the word 'Embeddings'
+    True
     >>> 'from typing import' in file_contents_1[1]  # i.e. types.py contains the phrase 'from typing import'
-
+    True
+    
     """
 
     def __init__(
@@ -109,23 +112,23 @@ FileLoader.pdf_file_text = pdf_file_text
 def test_file_loader():
     # Here, we'll use the dfault loader, which loads text from local files
     # We'll use the rootdir of the chromadb package as our root directory
-    import chromadb
+    import chromadol
 
-    rootdir = chromadb.__path__[0] + '/'
+    rootdir = chromadol.__path__[0] + '/'
     file_loader_1 = FileLoader(prefix=rootdir)
 
-    file_contents_1 = file_loader_1(['__init__.py', 'types.py'])
+    file_contents_1 = file_loader_1(['__init__.py', 'base.py'])
     assert len(file_contents_1) == 2
 
     # Note: The following two asserts seem faily robust, but still, they assume something
     # about the contents of __init__.py, and types.py, which could change in the future.
-    assert 'Embeddings' in file_contents_1[0]
-    assert 'from typing import' in file_contents_1[1]
+    assert 'ChromaCollection' in file_contents_1[0]
+    assert 'chromadb' in file_contents_1[1]
 
     # See that we could also decide that keys should assume the `.py` extension implicitly:
     file_loader_2 = FileLoader(prefix=rootdir, suffix='.py')
 
-    file_contents_2 = file_loader_2(['__init__', 'types'])
+    file_contents_2 = file_loader_2(['__init__', 'base'])
     assert sorted(file_contents_1) == sorted(file_contents_2)
 
     # Now lets use a different loader: One that returns contents from a remote URL
