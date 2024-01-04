@@ -22,5 +22,8 @@ def vectorize(func, iterable=None, *, max_workers: int = 1):
     if max_workers == 1:
         return list(map(func, iterable))
     else:
+        if max_workers is None:
+            # Take the number of CPUs as the max_workers
+            max_workers = __import__('multiprocessing').cpu_count()
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             return list(executor.map(func, iterable))
