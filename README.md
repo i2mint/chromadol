@@ -1,8 +1,10 @@
 # chromadol
+
 Data Object Layer for ChromaDB
 
-
 To install:	```pip install chromadol```
+
+[Documentation](https://i2mint.github.io/chromadol/)
 
 
 # Example usage
