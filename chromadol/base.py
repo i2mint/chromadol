@@ -1,16 +1,131 @@
 """Base objects for chromadol."""
 
-from typing import MutableMapping, Union
-from functools import cached_property
+from typing import MutableMapping, Union, Optional, Callable
 from dol.appendable import appendable, mk_item2kv_for
+from dol import ValueCodecs
 
 from chromadb import Client, PersistentClient, GetResult
 
 dflt_create_collection_kwargs = dict()
 
 
+def identity(x):
+    return x
+
+
+# def _resolve_codec(codec, kind):
+#     if codec is None:
+#         return identity
+#     elif isinstance(codec, str):
+#         field = codec
+#         codec = ValueCodecs.single_nested_value(field)
+#         if kind == 'encoder':
+#             return codec.encoder
+#         elif kind == 'decoder':
+#             return codec.decoder
+#         else:
+#             raise ValueError(f'kind must be "encoder" or "decoder", not {kind}')
+
+result_fields = set(GetResult.__annotations__)
+
+
+# @appendable(item2kv=item2kv)
+class ChromaCollection(MutableMapping):
+    def __init__(self, collection):
+        """
+        Initializes the store with a chromadb Collection instance.
+
+        :param collection: An instance of chromadb.Collection.
+        """
+        self.collection = collection
+
+    @property
+    def _ids(self):
+        collection_elements = self.collection.get()
+        return collection_elements['ids']
+
+    def __iter__(self):
+        return iter(self._ids)
+
+    def __getitem__(self, k: str) -> GetResult:
+        return self.collection.get(k)
+
+    def __len__(self):
+        return self.collection.count()
+
+    def __contains__(self, k):
+        try:
+            self.collection.get(k)
+            return True
+        except KeyError:
+            return False
+
+    def __setitem__(self, k: str, v: Union[dict, str]):
+        return self.collection.upsert(k, **v)
+
+    def __delitem__(self, k: str):
+        self.collection.delete(k)
+
+
+from dol import ValueCodecs
+
+# def int_string(x):
+#     return str(int(x))
+
+
+# item2kv = mk_item2kv_for.utc_key(factor=1e9, time_postproc=int_string)
+uuid_key = mk_item2kv_for.uuid_key()
+
+
+def get_collection(
+    collection,
+    *,
+    codec: Union[Callable, str] = identity,
+    client: Optional[Union[str, Client]] = None,
+) -> ChromaCollection:
+    if isinstance(collection, str):
+        clientdol = ChromaClient(client)
+        c = clientdol[collection]
+    else:
+        c = ChromaCollection(collection)
+
+    if isinstance(codec, str):
+        field = codec
+        assert field in result_fields, f'codec must be a field name in {result_fields}'
+        codec = ValueCodecs.single_nested_value(field)
+    else:
+        assert callable(codec), 'codec must be a callable or a field name'
+
+    return codec(c)
+
+
+@ValueCodecs.single_nested_value('documents')
+@appendable(item2kv=uuid_key)
+class ChromaDocuments(ChromaCollection):
+    """ChromaCollection but reading and writing only the 'documents' field."""
+
+
+@ValueCodecs.single_nested_value('uris')
+@appendable(item2kv=uuid_key)
+class ChromaUris(ChromaCollection):
+    """ChromaCollection but reading and writing only the 'uris' field."""
+
+
+@ValueCodecs.single_nested_value('metadata')
+@appendable(item2kv=uuid_key)
+class ChromaUris(ChromaCollection):
+    """ChromaCollection but reading and writing only the 'uris' field."""
+
+
 class ChromaClient(MutableMapping):
-    def __init__(self, client=None, *, get_or_create=True, **create_collection_kwargs):
+    def __init__(
+        self,
+        client=None,
+        *,
+        decoder=ChromaCollection,
+        get_or_create=True,
+        **create_collection_kwargs,
+    ):
         """
         Initializes the reader with a chromadb Client instance.
 
@@ -25,6 +140,7 @@ class ChromaClient(MutableMapping):
             create_collection_kwargs, get_or_create=get_or_create
         )
         self._create_collection_kwargs_for_setitem = create_collection_kwargs
+        self._decoder = decoder or identity
 
     def __iter__(self):
         """
@@ -39,7 +155,7 @@ class ChromaClient(MutableMapping):
         :param k: The name of the collection to retrieve.
         :return: The collection object.
         """
-        return ChromaCollection(
+        return self._decoder(
             self.client.create_collection(
                 k, **self._create_collection_kwargs_for_getitem
             )
@@ -95,50 +211,3 @@ class ChromaClient(MutableMapping):
 
         """
         raise NotImplementedError('Disabled for safety reasons.')
-
-
-def int_string(x):
-    return str(int(x))
-
-
-item2kv = mk_item2kv_for.utc_key(factor=1e9, time_postproc=int_string)
-
-
-@appendable(item2kv=item2kv)
-class ChromaCollection(MutableMapping):
-    def __init__(self, collection):
-        """
-        Initializes the store with a chromadb Collection instance.
-
-        :param collection: An instance of chromadb.Collection.
-        """
-        self.collection = collection
-
-    @property
-    def _ids(self):
-        collection_elements = self.collection.get()
-        return collection_elements['ids']
-
-    def __iter__(self):
-        return iter(self._ids)
-
-    def __getitem__(self, k: str) -> GetResult:
-        return self.collection.get(k)
-
-    def __len__(self):
-        return self.collection.count()
-
-    def __contains__(self, k):
-        try:
-            self.collection.get(k)
-            return True
-        except KeyError:
-            return False
-
-    def __setitem__(self, k: str, v: Union[dict, str]):
-        if isinstance(v, str):
-            v = {'documents': [v]}
-        self.collection.upsert(k, **v)
-
-    def __delitem__(self, k: str):
-        self.collection.delete(k)

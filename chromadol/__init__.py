@@ -99,36 +99,37 @@ You can read or write one document at a time too.
 ...     'data': None,
 ... }
 
-In fact, see that if you only want to specify the "documents" part of the information,
-you can just write a string instead of a dictionary:
 
->>> collection['cake'] = 'a different cake'
->>> assert collection['cake'] == {
-...     'ids': ['cake'],
-...     'embeddings': None,
-...     'metadatas': [None],
-...     'documents': ['a different cake'],
-...     'uris': None,
-...     'data': None,
-... }
+# In fact, see that if you only want to specify the "documents" part of the information,
+# you can just write a string instead of a dictionary:
 
-The `collection` instance is not only dict-like, but also list-like in the 
-sense that it has an `.append` and an `.extend` method.
+# >>> collection['cake'] = 'a different cake'
+# >>> assert collection['cake'] == {
+# ...     'ids': ['cake'],
+# ...     'embeddings': None,
+# ...     'metadatas': [None],
+# ...     'documents': ['a different cake'],
+# ...     'uris': None,
+# ...     'data': None,
+# ... }
 
->>> len(collection)
-3
->>> collection.extend(['two documents', 'specified without keys'])
->>> len(collection)
-5
+# The `collection` instance is not only dict-like, but also list-like in the 
+# sense that it has an `.append` and an `.extend` method.
 
-See that the two documents were added to the collection, and that they were assigned
-keys automatically:
+# >>> len(collection)
+# 3
+# >>> collection.extend(['two documents', 'specified without keys'])
+# >>> len(collection)
+# 5
 
->>> list(collection)  # doctest: +SKIP
-['piece', 'of', 'cake', '1704294539590875904', '1704294539631522048']
+# See that the two documents were added to the collection, and that they were assigned
+# keys automatically:
+
+# >>> list(collection)  # doctest: +SKIP
+# ['piece', 'of', 'cake', '1704294539590875904', '1704294539631522048']
 
 """
 
 from chromadol.base import ChromaCollection, ChromaClient
 from chromadol.data_loaders import FileLoader
-from chromadol.util import vectorize
+from chromadol.util import mapped_list

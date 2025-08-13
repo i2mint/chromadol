@@ -1,9 +1,10 @@
 """Data loaders for ChromaDB."""
+
 import multiprocessing
-from typing import Optional, Sequence, List, Union
+from typing import Optional, Sequence, List, Union, Mapping
 from operator import attrgetter
 from chromadb.api.types import URI, DataLoader
-from chromadol.util import vectorize
+from chromadol.util import mapped_list, identity
 
 # --------------------------- Examples of loaders ---------------------------
 
@@ -88,7 +89,7 @@ class FileLoader(DataLoader[List[Optional[FileContents]]]):
         self._suffix = suffix
         self._max_workers = max_workers
 
-    def _load_file(self, uri: Optional[URI]) -> Optional[FileContents]:
+    def _load(self, uri: Optional[URI]) -> Optional[FileContents]:
         if uri is None:
             return None
         return self._loader(f'{self._prefix}{uri}{self._suffix}')
@@ -97,7 +98,7 @@ class FileLoader(DataLoader[List[Optional[FileContents]]]):
         if isinstance(uris, str):
             # To avoid a common mistake, we cast a string to a list of containing it
             uris = [uris]
-        return vectorize(self._load_file, uris, max_workers=self._max_workers)
+        return mapped_list(self._load, uris, max_workers=self._max_workers)
 
 
 # add a few loaders as attributes, for convenience
@@ -105,6 +106,33 @@ FileLoader.load_text = load_text
 FileLoader.load_bytes = load_bytes
 FileLoader.url_to_contents = url_to_contents
 FileLoader.pdf_file_text = pdf_file_text
+
+from typing import Mapping, KT, VT, Optional, Callable
+
+
+class MappingLoader(DataLoader):
+    def __init__(
+        self,
+        mapping: Mapping[KT, VT],
+        *,
+        key_type: type = str,
+        ingress: Callable[[KT], KT] = identity,
+        egress: Callable[[VT], VT] = identity,
+        max_workers: Optional[int] = None,
+    ):
+        self._mapping = mapping
+        self._max_workers = max_workers
+        self._key_type = key_type
+        self._ingress = ingress
+        self._egress = egress
+
+    def _load(self, key):
+        return self._egress(self._mapping[self._ingress(key)])
+
+    def __call__(self, keys: Sequence[Optional[URI]]):
+        if isinstance(keys, self._key_type):
+            keys = [keys]
+        return mapped_list(self._load, keys, max_workers=self._max_workers)
 
 
 def test_file_loader():

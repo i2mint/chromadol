@@ -75,20 +75,20 @@ def test_simple():
         'data': None,
     }
 
-    # In fact, see that if you only want to specify the "documents" part of the information,
-    collection['cake'] = 'a different cake'
-    assert collection['cake'] == {
-        'ids': ['cake'],
-        'embeddings': None,
-        'metadatas': [None],
-        'documents': ['a different cake'],
-        'uris': None,
-        'data': None,
-    }
+    # # In fact, see that if you only want to specify the "documents" part of the information,
+    # collection['cake'] = 'a different cake'
+    # assert collection['cake'] == {
+    #     'ids': ['cake'],
+    #     'embeddings': None,
+    #     'metadatas': [None],
+    #     'documents': ['a different cake'],
+    #     'uris': None,
+    #     'data': None,
+    # }
 
-    # The `collection` instance is not only dict-like, but also list-like in the
-    # sense that it has an `.append` and an `.extend` method.
+    # # The `collection` instance is not only dict-like, but also list-like in the
+    # # sense that it has an `.append` and an `.extend` method.
 
-    assert len(collection) == 3
-    collection.extend(['two documents', 'specified without keys'])
-    assert len(collection) == 5
+    # assert len(collection) == 3
+    # collection.extend(['two documents', 'specified without keys'])
+    # assert len(collection) == 5
