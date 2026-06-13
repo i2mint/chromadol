@@ -20,12 +20,12 @@ def load_text(filepath: str) -> str:
 
 
 def load_bytes(filepath: str) -> bytes:
-    with open(filepath, 'rb') as f:
+    with open(filepath, "rb") as f:
         return f.read()
 
 
 def url_to_contents(
-    url: str, content_extractor=attrgetter('text'), *, params=None, **kwargs
+    url: str, content_extractor=attrgetter("text"), *, params=None, **kwargs
 ) -> FileContents:
     import requests
 
@@ -35,7 +35,7 @@ def url_to_contents(
 
 
 def pdf_file_text(
-    filepath: str, *, page_break_delim='---------------------------'
+    filepath: str, *, page_break_delim="---------------------------"
 ) -> str:
     from pypdf import PdfReader  # pip install pypdf
 
@@ -76,8 +76,8 @@ class FileLoader(DataLoader[list[Optional[FileContents]]]):
         self,
         loader=load_text,
         *,
-        prefix: str = '',
-        suffix: str = '',
+        prefix: str = "",
+        suffix: str = "",
         max_workers: int = multiprocessing.cpu_count(),
     ) -> None:
         """
@@ -95,7 +95,7 @@ class FileLoader(DataLoader[list[Optional[FileContents]]]):
     def _load(self, uri: URI | None) -> FileContents | None:
         if uri is None:
             return None
-        return self._loader(f'{self._prefix}{uri}{self._suffix}')
+        return self._loader(f"{self._prefix}{uri}{self._suffix}")
 
     def __call__(self, uris: Sequence[URI | None]) -> list[FileContents | None]:
         if isinstance(uris, str):
@@ -144,25 +144,25 @@ def test_file_loader():
     # We'll use the rootdir of the chromadb package as our root directory
     import chromadol
 
-    rootdir = chromadol.__path__[0] + '/'
+    rootdir = chromadol.__path__[0] + "/"
     file_loader_1 = FileLoader(prefix=rootdir)
 
-    file_contents_1 = file_loader_1(['__init__.py', 'base.py'])
+    file_contents_1 = file_loader_1(["__init__.py", "base.py"])
     assert len(file_contents_1) == 2
 
     # Note: The following two asserts seem faily robust, but still, they assume something
     # about the contents of __init__.py, and types.py, which could change in the future.
-    assert 'ChromaCollection' in file_contents_1[0]
-    assert 'chromadb' in file_contents_1[1]
+    assert "ChromaCollection" in file_contents_1[0]
+    assert "chromadb" in file_contents_1[1]
 
     # See that we could also decide that keys should assume the `.py` extension implicitly:
-    file_loader_2 = FileLoader(prefix=rootdir, suffix='.py')
+    file_loader_2 = FileLoader(prefix=rootdir, suffix=".py")
 
-    file_contents_2 = file_loader_2(['__init__', 'base'])
+    file_contents_2 = file_loader_2(["__init__", "base"])
     assert sorted(file_contents_1) == sorted(file_contents_2)
 
     # Now lets use a different loader: One that returns contents from a remote URL
     file_loader_3 = FileLoader(loader=FileLoader.url_to_contents)
-    url = 'https://github.com/chroma-core/chroma/issues/1606'
+    url = "https://github.com/chroma-core/chroma/issues/1606"
     contents = file_loader_3(url)[0]
-    'vectorizer' in contents  # this issue mentions the term "vectorizer"
+    "vectorizer" in contents  # this issue mentions the term "vectorizer"

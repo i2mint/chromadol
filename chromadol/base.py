@@ -45,7 +45,7 @@ class ChromaCollection(MutableMapping):
     @property
     def _ids(self):
         collection_elements = self.collection.get()
-        return collection_elements['ids']
+        return collection_elements["ids"]
 
     def __iter__(self):
         return iter(self._ids)
@@ -94,27 +94,27 @@ def get_collection(
 
     if isinstance(codec, str):
         field = codec
-        assert field in result_fields, f'codec must be a field name in {result_fields}'
+        assert field in result_fields, f"codec must be a field name in {result_fields}"
         codec = ValueCodecs.single_nested_value(field)
     else:
-        assert callable(codec), 'codec must be a callable or a field name'
+        assert callable(codec), "codec must be a callable or a field name"
 
     return codec(c)
 
 
-@ValueCodecs.single_nested_value('documents')
+@ValueCodecs.single_nested_value("documents")
 @appendable(item2kv=uuid_key)
 class ChromaDocuments(ChromaCollection):
     """ChromaCollection but reading and writing only the 'documents' field."""
 
 
-@ValueCodecs.single_nested_value('uris')
+@ValueCodecs.single_nested_value("uris")
 @appendable(item2kv=uuid_key)
 class ChromaUris(ChromaCollection):
     """ChromaCollection but reading and writing only the 'uris' field."""
 
 
-@ValueCodecs.single_nested_value('metadata')
+@ValueCodecs.single_nested_value("metadata")
 @appendable(item2kv=uuid_key)
 class ChromaUris(ChromaCollection):
     """ChromaCollection but reading and writing only the 'uris' field."""
@@ -213,4 +213,4 @@ class ChromaClient(MutableMapping):
         ...     del chroma_client_instance[k]
 
         """
-        raise NotImplementedError('Disabled for safety reasons.')
+        raise NotImplementedError("Disabled for safety reasons.")

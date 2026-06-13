@@ -12,7 +12,7 @@ from chromadb.api.types import ID
 
 from i2 import Sig
 
-T = TypeVar('T')
+T = TypeVar("T")
 Some = Union[T, Iterable[T]]
 MaybeSome = Optional[Some[T]]
 IDs = MaybeSome[ID]
@@ -43,7 +43,7 @@ def mapped_list(func, iterable=None, *, max_workers: int = 1):
     else:
         if max_workers is None:
             # Take the number of CPUs as the max_workers
-            max_workers = __import__('multiprocessing').cpu_count()
+            max_workers = __import__("multiprocessing").cpu_count()
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             return list(executor.map(func, iterable))
 
@@ -58,16 +58,16 @@ def subdict(d: Mapping, keys: Container) -> dict:
 
 
 def indices_of_id_not_in_collection(collection: Collection, ids: MaybeSome[ID]):
-    found_ids = set(collection.get(ids=ids, include=[]).get('ids', []))
+    found_ids = set(collection.get(ids=ids, include=[]).get("ids", []))
     return [i for i, id_ in enumerate(ids) if id_ not in found_ids]
 
 
 def ids_not_in_collection(collection: Collection, ids: MaybeSome[ID]):
-    found_ids = set(collection.get(ids=ids, include=[]).get('ids', []))
+    found_ids = set(collection.get(ids=ids, include=[]).get("ids", []))
     return [id_ for id_ in ids if id_ not in found_ids]
 
 
-@(Sig(Collection.add).ch_names(self='collection'))
+@(Sig(Collection.add).ch_names(self="collection"))
 def add_if_missing(collection: Collection, ids: MaybeSome[ID], **kwargs):
     """Add to collection if not already there."""
 
@@ -126,8 +126,8 @@ def keep_only_include_keys(method):
     @wraps(method)
     def _wrapped(*args, **kwargs):
         kwargs = map_arguments(method, args, kwargs)
-        include = list(kwargs.get('include', []))
-        keep_keys = ['ids'] + include
+        include = list(kwargs.get("include", []))
+        keep_keys = ["ids"] + include
         return subdict(method(*args, **kwargs), keep_keys)
 
     return _wrapped
@@ -145,7 +145,7 @@ class Delegator:
         return getattr(self.wrapped_obj, attr)
 
 
-def _methods_containing_include_argument(obj, argname='include'):
+def _methods_containing_include_argument(obj, argname="include"):
     """Outputs all (non-underscored) method names of an object that contain
     a specific argument (by default, 'include').
 
@@ -163,14 +163,14 @@ def _methods_containing_include_argument(obj, argname='include'):
     return [
         method_name
         for method_name in dir(obj)
-        if not method_name.startswith('_')
+        if not method_name.startswith("_")
         and callable(method := getattr(obj, method_name))
         and argname in signature(method).parameters
     ]
 
 
 def transform_methods_to_keep_only_include_keys(
-    instance, method_names=('get', 'query')
+    instance, method_names=("get", "query")
 ):
     """
     Wraps all methods that contain an `include` argument so they filter their output
@@ -178,8 +178,8 @@ def transform_methods_to_keep_only_include_keys(
     """
     delegated = Delegator(instance)
     for method_name in dir(instance):
-        if not method_name.startswith('_'):
+        if not method_name.startswith("_"):
             method = getattr(instance, method_name)
-            if callable(method) and 'include' in signature(method).parameters:
+            if callable(method) and "include" in signature(method).parameters:
                 setattr(delegated, method_name, keep_only_include_keys(method))
     return delegated

@@ -2,12 +2,12 @@
 
 Example usage:
 
-To make a `ChromaClient` DOL, you can specify a `chromadb` `Client`, `PersistentClient` (etc.) 
+To make a `ChromaClient` DOL, you can specify a `chromadb` `Client`, `PersistentClient` (etc.)
 instance, or specify a string (which will be interpreted as a path to a directory to
 save the data to in a `PersistentClient` instance).
 
 >>> from chromadol import ChromaClient
->>> import tempfile, os 
+>>> import tempfile, os
 >>> with tempfile.TemporaryDirectory() as temp_dir:
 ...     tempdir = os.path.join(temp_dir, "chromadol_test")
 ...     os.makedirs(tempdir)
@@ -24,7 +24,7 @@ There's nothing yet:
 >>> list(client)
 []
 
-Now let's "get" a collection. 
+Now let's "get" a collection.
 
 >>> collection = client['chromadol_test']
 
@@ -40,8 +40,8 @@ Here's nothing in the collection yet:
 []
 
 So let's write something.
-Note that `chromadb` is designed to operate on multiple documents at once, 
-so the "chromadb-natural" way of specifying it's keys and contents (and any extras) 
+Note that `chromadb` is designed to operate on multiple documents at once,
+so the "chromadb-natural" way of specifying it's keys and contents (and any extras)
 would be like this:
 
 >>> collection[['piece', 'of']] = {
@@ -113,7 +113,7 @@ You can read or write one document at a time too.
 # ...     'data': None,
 # ... }
 
-# The `collection` instance is not only dict-like, but also list-like in the 
+# The `collection` instance is not only dict-like, but also list-like in the
 # sense that it has an `.append` and an `.extend` method.
 
 # >>> len(collection)
