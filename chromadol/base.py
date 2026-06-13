@@ -1,6 +1,9 @@
 """Base objects for chromadol."""
 
-from typing import MutableMapping, Union, Optional, Callable
+from __future__ import annotations
+
+from typing import Union, Optional
+from collections.abc import MutableMapping, Callable
 from dol.appendable import appendable, mk_item2kv_for
 from dol import ValueCodecs
 
@@ -60,7 +63,7 @@ class ChromaCollection(MutableMapping):
         except KeyError:
             return False
 
-    def __setitem__(self, k: str, v: Union[dict, str]):
+    def __setitem__(self, k: str, v: dict | str):
         return self.collection.upsert(k, **v)
 
     def __delitem__(self, k: str):
@@ -80,8 +83,8 @@ uuid_key = mk_item2kv_for.uuid_key()
 def get_collection(
     collection,
     *,
-    codec: Union[Callable, str] = identity,
-    client: Optional[Union[str, Client]] = None,
+    codec: Callable | str = identity,
+    client: str | Client | None = None,
 ) -> ChromaCollection:
     if isinstance(collection, str):
         clientdol = ChromaClient(client)

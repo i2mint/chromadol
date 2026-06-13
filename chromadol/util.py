@@ -1,8 +1,11 @@
 """Utils for chromadol."""
 
+from __future__ import annotations
+
 from functools import partial
 from concurrent.futures import ThreadPoolExecutor
-from typing import TypeVar, Optional, Iterable, Union, Mapping
+from typing import TypeVar, Optional, Union
+from collections.abc import Iterable, Mapping
 from collections.abc import Container
 from chromadb import Collection
 from chromadb.api.types import ID
