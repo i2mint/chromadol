@@ -76,7 +76,7 @@ convention = "google"
 [tool.pytest.ini_options]
 minversion = "6.0"
 testpaths = [
-    "tests",
+    "chromadol/tests",
 ]
 doctest_optionflags = [
     "NORMALIZE_WHITESPACE",

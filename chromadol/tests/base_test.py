@@ -4,6 +4,17 @@
 from chromadol.base import ChromaClient
 
 
+def _record_includes(record, expected):
+    """Whether ``record`` contains all the ``expected`` key->value pairs.
+
+    chromadb's get-record shape carries volatile keys that drift across
+    versions (e.g. ``included``, and the ``embeddings`` / ``uris`` / ``data``
+    null-defaults), so asserting full equality is brittle. We assert only the
+    stable, meaningful subset.
+    """
+    return all(record.get(k) == v for k, v in expected.items())
+
+
 def test_simple():
     """A simple test of the ChromaClient and ChromaCollection classes."""
 
@@ -39,23 +50,17 @@ def test_simple():
 
     assert sorted(collection) == ['of', 'piece']
 
-    assert collection['piece'] == {
+    assert _record_includes(collection['piece'], {
         'ids': ['piece'],
-        'embeddings': None,
         'metadatas': [{'author': 'me'}],
         'documents': ['contents for piece'],
-        'uris': None,
-        'data': None,
-    }
+    })
 
-    assert collection['of'] == {
+    assert _record_includes(collection['of'], {
         'ids': ['of'],
-        'embeddings': None,
         'metadatas': [{'author': 'you'}],
         'documents': ['contents for of'],
-        'uris': None,
-        'data': None,
-    }
+    })
 
     # You can also read multiple documents at once.
     # But note that the order of the documents is not guaranteed.
@@ -66,14 +71,11 @@ def test_simple():
         'documents': 'contents for cake',
     }
     assert set(collection) == {'piece', 'of', 'cake'}
-    assert collection['cake'] == {
+    assert _record_includes(collection['cake'], {
         'ids': ['cake'],
-        'embeddings': None,
         'metadatas': [None],
         'documents': ['contents for cake'],
-        'uris': None,
-        'data': None,
-    }
+    })
 
     # # In fact, see that if you only want to specify the "documents" part of the information,
     # collection['cake'] = 'a different cake'

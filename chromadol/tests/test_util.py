@@ -13,14 +13,14 @@ def test_transform_methods_to_keep_only_include_keys():
 
     collection.add(ids=['apple', 'banana'], documents=['crumble', 'split'])
 
-    assert collection.get() == {
-        'ids': ['apple', 'banana'],
-        'embeddings': None,
-        'metadatas': [None, None],
-        'documents': ['crumble', 'split'],
-        'uris': None,
-        'data': None,
-    }
+    # Raw chromadb returns the full record. Newer chromadb versions add volatile
+    # keys (e.g. 'included'), so check the meaningful fields rather than exact
+    # equality.
+    raw = collection.get()
+    assert raw['ids'] == ['apple', 'banana']
+    assert raw['documents'] == ['crumble', 'split']
+    assert raw['metadatas'] == [None, None]
+    assert {'ids', 'documents', 'metadatas', 'embeddings', 'uris', 'data'} <= set(raw)
 
     wrapped_collection = transform_methods_to_keep_only_include_keys(collection)
 
@@ -36,9 +36,10 @@ def test_transform_methods_to_keep_only_include_keys():
         'uris': [None, None],
     }
 
-    # Original query method
+    # Original query method returns all standard fields (key order and extra
+    # volatile keys like 'included' vary by chromadb version).
     result = collection.query(query_texts='split', n_results=1)
-    assert list(result) == [
+    assert {
         'ids',
         'distances',
         'metadatas',
@@ -46,9 +47,9 @@ def test_transform_methods_to_keep_only_include_keys():
         'documents',
         'uris',
         'data',
-    ]
+    } <= set(result)
 
     filtered_result = wrapped_collection.query(
         query_texts='split', n_results=1, include=['documents', 'distances']
     )
-    assert list(filtered_result) == ['ids', 'distances', 'documents']
+    assert set(filtered_result) == {'ids', 'distances', 'documents'}
