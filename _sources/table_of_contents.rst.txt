@@ -7,4 +7,5 @@
    module_docs/chromadol/data_loaders
    module_docs/chromadol/tests
    module_docs/chromadol/tests/base_test
+   module_docs/chromadol/tests/test_util
    module_docs/chromadol/util

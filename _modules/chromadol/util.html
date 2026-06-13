@@ -1,23 +1,25 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chromadol.util &mdash; chromadol 0.1.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script src="../../_static/toggleprompt.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+  <title>chromadol.util &mdash; chromadol 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -42,13 +44,14 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/chromadol.html">chromadol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/chromadol/base.html">chromadol.base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/chromadol/data_loaders.html">chromadol.data_loaders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/chromadol/tests.html">chromadol.tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/chromadol/tests/base_test.html">chromadol.tests.base_test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/chromadol/tests/test_util.html">chromadol.tests.test_util</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/chromadol/util.html">chromadol.util</a></li>
 </ul>
 
@@ -79,30 +82,216 @@
   <h1>Source code for chromadol.util</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Utils for chromadol.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">concurrent.futures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Mapping</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Container</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chromadb</span><span class="w"> </span><span class="kn">import</span> <span class="n">Collection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chromadb.api.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ID</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">i2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sig</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">Some</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
+<span class="n">MaybeSome</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Some</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
+<span class="n">IDs</span> <span class="o">=</span> <span class="n">MaybeSome</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="vectorize"><a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.vectorize">[docs]</a><span class="k">def</span> <span class="nf">vectorize</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">max_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="identity">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.identity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">identity</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The identity function. Returns what it is given.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">x</span></div>
+
+
+
+<div class="viewcode-block" id="mapped_list">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.mapped_list">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mapped_list</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">max_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Like builtin map, but returns a list,</span>
 <span class="sd">    and if iterable is None, returns a partial function that can directly be applied</span>
 <span class="sd">    to an iterable.</span>
 <span class="sd">    This is useful, for instance, for making a data loader from any single-uri loader.</span>
 
 <span class="sd">    Example:</span>
-<span class="sd">    &gt;&gt;&gt; vectorize(lambda x: x**2, [1,2,3])</span>
+<span class="sd">    &gt;&gt;&gt; mapped_list(lambda x: x**2, [1,2,3])</span>
 <span class="sd">    [1, 4, 9]</span>
-<span class="sd">    &gt;&gt;&gt; vectorized_square = vectorize(lambda x: x**2)</span>
-<span class="sd">    &gt;&gt;&gt; vectorized_square([1,2,3])</span>
+<span class="sd">    &gt;&gt;&gt; squares = vectorize(lambda x: x**2)</span>
+<span class="sd">    &gt;&gt;&gt; squares([1,2,3])</span>
 <span class="sd">    [1, 4, 9]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">iterable</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">vectorize</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mapped_list</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">max_workers</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">max_workers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Take the number of CPUs as the max_workers</span>
+            <span class="n">max_workers</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s1">&#39;multiprocessing&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
         <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">iterable</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="subdict">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.subdict">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">subdict</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">keys</span><span class="p">:</span> <span class="n">Container</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;return a subdict with only the given keys</span>
+
+<span class="sd">    &gt;&gt;&gt; subdict(dict(a=1, b=2, c=3), [&#39;a&#39;, &#39;c&#39;])</span>
+<span class="sd">    {&#39;a&#39;: 1, &#39;c&#39;: 3}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">}</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">indices_of_id_not_in_collection</span><span class="p">(</span><span class="n">collection</span><span class="p">:</span> <span class="n">Collection</span><span class="p">,</span> <span class="n">ids</span><span class="p">:</span> <span class="n">MaybeSome</span><span class="p">[</span><span class="n">ID</span><span class="p">]):</span>
+    <span class="n">found_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[])</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ids&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">id_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span> <span class="k">if</span> <span class="n">id_</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">found_ids</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ids_not_in_collection</span><span class="p">(</span><span class="n">collection</span><span class="p">:</span> <span class="n">Collection</span><span class="p">,</span> <span class="n">ids</span><span class="p">:</span> <span class="n">MaybeSome</span><span class="p">[</span><span class="n">ID</span><span class="p">]):</span>
+    <span class="n">found_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">collection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ids</span><span class="o">=</span><span class="n">ids</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="p">[])</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;ids&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">id_</span> <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">ids</span> <span class="k">if</span> <span class="n">id_</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">found_ids</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="add_if_missing">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.add_if_missing">[docs]</a>
+<span class="o">@</span><span class="p">(</span><span class="n">Sig</span><span class="p">(</span><span class="n">Collection</span><span class="o">.</span><span class="n">add</span><span class="p">)</span><span class="o">.</span><span class="n">ch_names</span><span class="p">(</span><span class="bp">self</span><span class="o">=</span><span class="s1">&#39;collection&#39;</span><span class="p">))</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_if_missing</span><span class="p">(</span><span class="n">collection</span><span class="p">:</span> <span class="n">Collection</span><span class="p">,</span> <span class="n">ids</span><span class="p">:</span> <span class="n">MaybeSome</span><span class="p">[</span><span class="n">ID</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add to collection if not already there.&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">ids</span><span class="p">:</span>
+        <span class="n">missing_indices</span> <span class="o">=</span> <span class="n">indices_of_id_not_in_collection</span><span class="p">(</span><span class="n">collection</span><span class="p">,</span> <span class="n">ids</span><span class="p">)</span>
+        <span class="n">get_missing</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">array</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="p">[</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">missing_indices</span><span class="p">]</span>
+        <span class="c1"># take the get_missing_only subset of each array-valued kwarg value</span>
+        <span class="k">if</span> <span class="n">missing_indices</span><span class="p">:</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">ids</span><span class="o">=</span><span class="n">ids</span><span class="p">)</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">get_missing</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">missing_indices</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="k">return</span> <span class="n">collection</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">inspect</span><span class="w"> </span><span class="kn">import</span> <span class="n">signature</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
+
+
+<div class="viewcode-block" id="map_arguments">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.map_arguments">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">map_arguments</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get a `{argname: argval, ...}` dict from the args and kwargs of a function call.</span>
+
+<span class="sd">    &gt;&gt;&gt; func = lambda x, y, z=42: None</span>
+<span class="sd">    &gt;&gt;&gt; map_arguments(func, [1], {&#39;y&#39;: 2})  # x as positional, y as keyword, z not given</span>
+<span class="sd">    {&#39;x&#39;: 1, &#39;y&#39;: 2, &#39;z&#39;: 42}</span>
+<span class="sd">    &gt;&gt;&gt; map_arguments(func, [1, 2], {&#39;z&#39;: 4})  # z given, so use that</span>
+<span class="sd">    {&#39;x&#39;: 1, &#39;y&#39;: 2, &#39;z&#39;: 4}</span>
+<span class="sd">    &gt;&gt;&gt; map_arguments(func, [1, 2, 3], {})  # y given as positional, so use that</span>
+<span class="sd">    {&#39;x&#39;: 1, &#39;y&#39;: 2, &#39;z&#39;: 3}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">signature</span><span class="p">(</span><span class="n">func</span><span class="p">)</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">apply_defaults</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">arguments</span></div>
+
+
+
+<div class="viewcode-block" id="argument_value">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.argument_value">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">argument_value</span><span class="p">(</span><span class="n">argname</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract the argument value from a function call, or the default if not given.</span>
+
+<span class="sd">    Note that this</span>
+
+<span class="sd">    &gt;&gt;&gt; func = lambda x, y, z=42: None</span>
+<span class="sd">    &gt;&gt;&gt; argument_value(&#39;z&#39;, func, [1, 2], {})  # z not given, so use default</span>
+<span class="sd">    42</span>
+<span class="sd">    &gt;&gt;&gt; argument_value(&#39;z&#39;, func, [1, 2], {&#39;z&#39;: 4})  # z given, so use that</span>
+<span class="sd">    4</span>
+<span class="sd">    &gt;&gt;&gt; argument_value(&#39;z&#39;, func, [1, 2, 3], {})  # y given as positional, so use that</span>
+<span class="sd">    3</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">map_arguments</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">argname</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="keep_only_include_keys">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.keep_only_include_keys">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">keep_only_include_keys</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return wrapped method that only subdicts it&#39;s outputs to only `include` keys.&quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="n">map_arguments</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">include</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;include&#39;</span><span class="p">,</span> <span class="p">[]))</span>
+        <span class="n">keep_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ids&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">include</span>
+        <span class="k">return</span> <span class="n">subdict</span><span class="p">(</span><span class="n">method</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span> <span class="n">keep_keys</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_wrapped</span></div>
+
+
+
+<span class="c1"># TODO: The pydantic.BaseModel parent class of Collection forbids me to re-assign methods</span>
+<span class="c1">#  so I need to wrap the whole Collection</span>
+<div class="viewcode-block" id="Delegator">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.Delegator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Delegator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Delegates all attributes to the wrapped object&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wrapped_obj</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wrapped_obj</span> <span class="o">=</span> <span class="n">wrapped_obj</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>  <span class="c1"># delegation: just forward attributes to wrapped_obj</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wrapped_obj</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_methods_containing_include_argument</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">argname</span><span class="o">=</span><span class="s1">&#39;include&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Outputs all (non-underscored) method names of an object that contain</span>
+<span class="sd">    a specific argument (by default, &#39;include&#39;).</span>
+
+<span class="sd">    At the time of writing this, I get:</span>
+
+<span class="sd">    &gt;&gt;&gt; sorted(</span>
+<span class="sd">    ...     _methods_containing_include_argument(</span>
+<span class="sd">    ...         __import__(&#39;chromadb&#39;).Collection,</span>
+<span class="sd">    ...         argname=&#39;include&#39;</span>
+<span class="sd">    ...     )</span>
+<span class="sd">    ... )</span>
+<span class="sd">    [&#39;copy&#39;, &#39;dict&#39;, &#39;get&#39;, &#39;json&#39;, &#39;query&#39;]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">method_name</span>
+        <span class="k">for</span> <span class="n">method_name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">method_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+        <span class="ow">and</span> <span class="nb">callable</span><span class="p">(</span><span class="n">method</span> <span class="o">:=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">method_name</span><span class="p">))</span>
+        <span class="ow">and</span> <span class="n">argname</span> <span class="ow">in</span> <span class="n">signature</span><span class="p">(</span><span class="n">method</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span>
+    <span class="p">]</span>
+
+
+<div class="viewcode-block" id="transform_methods_to_keep_only_include_keys">
+<a class="viewcode-back" href="../../module_docs/chromadol/util.html#chromadol.util.transform_methods_to_keep_only_include_keys">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">transform_methods_to_keep_only_include_keys</span><span class="p">(</span>
+    <span class="n">instance</span><span class="p">,</span> <span class="n">method_names</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="s1">&#39;query&#39;</span><span class="p">)</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wraps all methods that contain an `include` argument so they filter their output</span>
+<span class="sd">    accordingly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">delegated</span> <span class="o">=</span> <span class="n">Delegator</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">method_name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">method_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">):</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">method_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">method</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;include&#39;</span> <span class="ow">in</span> <span class="n">signature</span><span class="p">(</span><span class="n">method</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">delegated</span><span class="p">,</span> <span class="n">method_name</span><span class="p">,</span> <span class="n">keep_only_include_keys</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">delegated</span></div>
+
 </pre></div>
 
            </div>
@@ -112,7 +301,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

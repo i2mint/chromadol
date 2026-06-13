@@ -1,24 +1,26 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chromadol.data_loaders &mdash; chromadol 0.1.1 documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/copybutton.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script src="../../_static/toggleprompt.js"></script>
-        <script src="../../_static/clipboard.min.js"></script>
-        <script src="../../_static/copybutton.js"></script>
+  <title>chromadol.data_loaders &mdash; chromadol 0.1.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -45,13 +47,18 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../chromadol.html">chromadol</a></li>
 <li class="toctree-l1"><a class="reference internal" href="base.html">chromadol.base</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">chromadol.data_loaders</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">chromadol.data_loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#chromadol.data_loaders.FileLoader"><code class="docutils literal notranslate"><span class="pre">FileLoader</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#chromadol.data_loaders.MappingLoader"><code class="docutils literal notranslate"><span class="pre">MappingLoader</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">chromadol.tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tests/base_test.html">chromadol.tests.base_test</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_util.html">chromadol.tests.test_util</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">chromadol.util</a></li>
 </ul>
 
@@ -80,11 +87,11 @@
            <div itemprop="articleBody">
              
   <section id="module-chromadol.data_loaders">
-<span id="chromadol-data-loaders"></span><h1>chromadol.data_loaders<a class="headerlink" href="#module-chromadol.data_loaders" title="Permalink to this headline">¶</a></h1>
+<span id="chromadol-data-loaders"></span><h1>chromadol.data_loaders<a class="headerlink" href="#module-chromadol.data_loaders" title="Link to this heading"></a></h1>
 <p>Data loaders for ChromaDB.</p>
 <dl class="py class">
-<dt id="chromadol.data_loaders.FileLoader">
-<em class="property">class </em><code class="sig-prename descclassname">chromadol.data_loaders.</code><code class="sig-name descname">FileLoader</code><span class="sig-paren">(</span><em class="sig-param">loader=&lt;function load_text&gt;</em>, <em class="sig-param">*</em>, <em class="sig-param">prefix: str = ''</em>, <em class="sig-param">suffix: str = ''</em>, <em class="sig-param">max_workers: int = 4</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/chromadol/data_loaders.html#FileLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chromadol.data_loaders.FileLoader" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="chromadol.data_loaders.FileLoader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">chromadol.data_loaders.</span></span><span class="sig-name descname"><span class="pre">FileLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">load_text&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/chromadol/data_loaders.html#FileLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chromadol.data_loaders.FileLoader" title="Link to this definition"></a></dt>
 <dd><p>A DataLoader that loads a list of text files from a list of URIs.</p>
 <p>By default, it loads text files from local files, given URIs that are full file paths.
 You can specify a prefix thought (usually used to specify a root directory),
@@ -92,7 +99,7 @@ or a suffix (usually used to specify a file extension).</p>
 <p>Further, you can specify a different <cite>loader</cite>, e.g. to load files from a remote URL,
 or to load binary files, or to load text from pdf files, or from S3, or a database, etc.</p>
 <p>Example:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">chromadb</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">chromadb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rootdir</span> <span class="o">=</span> <span class="n">chromadb</span><span class="o">.</span><span class="n">__path__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">file_loader_1</span> <span class="o">=</span> <span class="n">FileLoader</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="n">rootdir</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">file_contents_1</span> <span class="o">=</span> <span class="n">file_loader_1</span><span class="p">([</span><span class="s1">&#39;__init__.py&#39;</span><span class="p">,</span> <span class="s1">&#39;types.py&#39;</span><span class="p">])</span>
@@ -105,6 +112,11 @@ or to load binary files, or to load text from pdf files, or from S3, or a databa
 </pre></div>
 </div>
 </dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chromadol.data_loaders.MappingLoader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">chromadol.data_loaders.</span></span><span class="sig-name descname"><span class="pre">MappingLoader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">mapping:</span> <span class="pre">~collections.abc.Mapping,</span> <span class="pre">*,</span> <span class="pre">key_type:</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">ingress:</span> <span class="pre">~collections.abc.Callable[[KT],</span> <span class="pre">KT]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">identity&gt;,</span> <span class="pre">egress:</span> <span class="pre">~collections.abc.Callable[[VT],</span> <span class="pre">VT]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">identity&gt;,</span> <span class="pre">max_workers:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/chromadol/data_loaders.html#MappingLoader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#chromadol.data_loaders.MappingLoader" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </section>
 
@@ -119,7 +131,7 @@ or to load binary files, or to load text from pdf files, or from S3, or a databa
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
