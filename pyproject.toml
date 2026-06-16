@@ -10,19 +10,44 @@ version = "0.1.3"
 description = "Data Object Layer for ChromaDB"
 readme = "README.md"
 requires-python = ">=3.10"
-keywords = []
+license = "MIT"
+keywords = [
+    "chromadb",
+    "vector-database",
+    "vector-store",
+    "embeddings",
+    "dol",
+    "key-value-store",
+    "storage",
+    "mapping",
+]
 authors = []
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Database :: Front-Ends",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "i2",
     "dol",
     "chromadb",
 ]
 
-[project.license]
-text = "MIT"
-
 [project.urls]
 Homepage = "https://github.com/i2mint/chromadol"
+Documentation = "https://i2mint.github.io/chromadol/"
+Repository = "https://github.com/i2mint/chromadol"
+Issues = "https://github.com/i2mint/chromadol/issues"
+Changelog = "https://github.com/i2mint/chromadol/blob/master/CHANGELOG.md"
 
 [project.optional-dependencies]
 dev = [
