@@ -32,7 +32,7 @@ def mapped_list(func, iterable=None, *, max_workers: int = 1):
     Example:
     >>> mapped_list(lambda x: x**2, [1,2,3])
     [1, 4, 9]
-    >>> squares = vectorize(lambda x: x**2)
+    >>> squares = mapped_list(lambda x: x**2)  # iterable=None -> partial
     >>> squares([1,2,3])
     [1, 4, 9]
     """
@@ -149,15 +149,15 @@ def _methods_containing_include_argument(obj, argname="include"):
     """Outputs all (non-underscored) method names of an object that contain
     a specific argument (by default, 'include').
 
-    At the time of writing this, I get:
+    The chromadb ``Collection`` methods taking an ``include`` argument always
+    include ``get`` and ``query``; the exact set varies across chromadb and
+    pydantic versions, so we assert the stable subset:
 
-    >>> sorted(
-    ...     _methods_containing_include_argument(
-    ...         __import__('chromadb').Collection,
-    ...         argname='include'
-    ...     )
+    >>> result = _methods_containing_include_argument(
+    ...     __import__('chromadb').Collection, argname='include'
     ... )
-    ['copy', 'dict', 'get', 'json', 'query']
+    >>> {'get', 'query'}.issubset(result)
+    True
 
     """
     return [

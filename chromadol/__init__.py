@@ -59,23 +59,17 @@ Note, though, that the order of the documents is not guaranteed.
 >>> sorted(collection)
 ['of', 'piece']
 
->>> assert collection['piece'] == {
-...     'ids': ['piece'],
-...     'embeddings': None,
-...     'metadatas': [{'author': 'me'}],
-...     'documents': ['contents for piece'],
-...     'uris': None,
-...     'data': None
-... }
+Reading a key back returns a ``chromadb`` record. Its meaningful fields are
+``ids``, ``documents`` and ``metadatas`` (``chromadb`` also manages
+``embeddings``/``uris``/``data``/``included``, whose presence and defaults
+vary by version), so we check the meaningful fields:
 
->>> assert collection['of'] == {
-...     'ids': ['of'],
-...     'embeddings': None,
-...     'metadatas': [{'author': 'you'}],
-...     'documents': ['contents for of'],
-...     'uris': None,
-...     'data': None
-... }
+>>> piece = collection['piece']
+>>> piece['ids'], piece['documents'], piece['metadatas']
+(['piece'], ['contents for piece'], [{'author': 'me'}])
+>>> of = collection['of']
+>>> of['ids'], of['documents'], of['metadatas']
+(['of'], ['contents for of'], [{'author': 'you'}])
 
 You can also read multiple documents at once.
 But note that the order of the documents is not guaranteed.
@@ -90,14 +84,9 @@ You can read or write one document at a time too.
 ... }
 >>> sorted(collection)  # sorting because order is not guaranteed
 ['cake', 'of', 'piece']
->>> assert collection['cake'] == {
-...     'ids': ['cake'],
-...     'embeddings': None,
-...     'metadatas': [None],
-...     'documents': ['contents for cake'],
-...     'uris': None,
-...     'data': None,
-... }
+>>> cake = collection['cake']
+>>> cake['ids'], cake['documents'], cake['metadatas']
+(['cake'], ['contents for cake'], [None])
 
 
 # In fact, see that if you only want to specify the "documents" part of the information,
