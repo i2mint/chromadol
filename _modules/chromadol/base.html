@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chromadol.base &mdash; chromadol 0.1.2 documentation</title>
+  <title>chromadol.base &mdash; chromadol 0.1.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -129,7 +129,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">collection_elements</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">collection_elements</span><span class="p">[</span><span class="s1">&#39;ids&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">collection_elements</span><span class="p">[</span><span class="s2">&quot;ids&quot;</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ids</span><span class="p">)</span>
@@ -179,24 +179,24 @@
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">codec</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">field</span> <span class="o">=</span> <span class="n">codec</span>
-        <span class="k">assert</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">result_fields</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;codec must be a field name in </span><span class="si">{</span><span class="n">result_fields</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">assert</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">result_fields</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;codec must be a field name in </span><span class="si">{</span><span class="n">result_fields</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">codec</span> <span class="o">=</span> <span class="n">ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">callable</span><span class="p">(</span><span class="n">codec</span><span class="p">),</span> <span class="s1">&#39;codec must be a callable or a field name&#39;</span>
+        <span class="k">assert</span> <span class="nb">callable</span><span class="p">(</span><span class="n">codec</span><span class="p">),</span> <span class="s2">&quot;codec must be a callable or a field name&quot;</span>
 
     <span class="k">return</span> <span class="n">codec</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ChromaDocuments">
 <a class="viewcode-back" href="../../module_docs/chromadol/base.html#chromadol.base.ChromaDocuments">[docs]</a>
-<span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s1">&#39;documents&#39;</span><span class="p">)</span>
+<span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s2">&quot;documents&quot;</span><span class="p">)</span>
 <span class="nd">@appendable</span><span class="p">(</span><span class="n">item2kv</span><span class="o">=</span><span class="n">uuid_key</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ChromaDocuments</span><span class="p">(</span><span class="n">ChromaCollection</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;ChromaCollection but reading and writing only the &#39;documents&#39; field.&quot;&quot;&quot;</span></div>
 
 
 
-<span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s1">&#39;uris&#39;</span><span class="p">)</span>
+<span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s2">&quot;uris&quot;</span><span class="p">)</span>
 <span class="nd">@appendable</span><span class="p">(</span><span class="n">item2kv</span><span class="o">=</span><span class="n">uuid_key</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ChromaUris</span><span class="p">(</span><span class="n">ChromaCollection</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;ChromaCollection but reading and writing only the &#39;uris&#39; field.&quot;&quot;&quot;</span>
@@ -204,7 +204,7 @@
 
 <div class="viewcode-block" id="ChromaUris">
 <a class="viewcode-back" href="../../module_docs/chromadol/base.html#chromadol.base.ChromaUris">[docs]</a>
-<span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s1">&#39;metadata&#39;</span><span class="p">)</span>
+<span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s2">&quot;metadata&quot;</span><span class="p">)</span>
 <span class="nd">@appendable</span><span class="p">(</span><span class="n">item2kv</span><span class="o">=</span><span class="n">uuid_key</span><span class="p">)</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">ChromaUris</span><span class="p">(</span><span class="n">ChromaCollection</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;ChromaCollection but reading and writing only the &#39;uris&#39; field.&quot;&quot;&quot;</span></div>
@@ -308,7 +308,7 @@
 <span class="sd">        ...     del chroma_client_instance[k]</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Disabled for safety reasons.&#39;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Disabled for safety reasons.&quot;</span><span class="p">)</span></div>
 </div>
 
 </pre></div>

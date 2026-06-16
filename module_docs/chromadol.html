@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chromadol &mdash; chromadol 0.1.2 documentation</title>
+  <title>chromadol &mdash; chromadol 0.1.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=92734c54"></script>
+      <script src="../_static/documentation_options.js?v=360bc84d"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -142,24 +142,16 @@ would be like this:</p>
 <span class="go">[&#39;of&#39;, &#39;piece&#39;]</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">collection</span><span class="p">[</span><span class="s1">&#39;piece&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s1">&#39;ids&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;piece&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;embeddings&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;metadatas&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;author&#39;</span><span class="p">:</span> <span class="s1">&#39;me&#39;</span><span class="p">}],</span>
-<span class="gp">... </span>    <span class="s1">&#39;documents&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;contents for piece&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;uris&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="kc">None</span>
-<span class="gp">... </span><span class="p">}</span>
-</pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">collection</span><span class="p">[</span><span class="s1">&#39;of&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s1">&#39;ids&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;of&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;embeddings&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;metadatas&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;author&#39;</span><span class="p">:</span> <span class="s1">&#39;you&#39;</span><span class="p">}],</span>
-<span class="gp">... </span>    <span class="s1">&#39;documents&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;contents for of&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;uris&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="kc">None</span>
-<span class="gp">... </span><span class="p">}</span>
+<p>Reading a key back returns a <code class="docutils literal notranslate"><span class="pre">chromadb</span></code> record. Its meaningful fields are
+<code class="docutils literal notranslate"><span class="pre">ids</span></code>, <code class="docutils literal notranslate"><span class="pre">documents</span></code> and <code class="docutils literal notranslate"><span class="pre">metadatas</span></code> (<code class="docutils literal notranslate"><span class="pre">chromadb</span></code> also manages
+<code class="docutils literal notranslate"><span class="pre">embeddings</span></code>/<code class="docutils literal notranslate"><span class="pre">uris</span></code>/<code class="docutils literal notranslate"><span class="pre">data</span></code>/<code class="docutils literal notranslate"><span class="pre">included</span></code>, whose presence and defaults
+vary by version), so we check the meaningful fields:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">piece</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="s1">&#39;piece&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">piece</span><span class="p">[</span><span class="s1">&#39;ids&#39;</span><span class="p">],</span> <span class="n">piece</span><span class="p">[</span><span class="s1">&#39;documents&#39;</span><span class="p">],</span> <span class="n">piece</span><span class="p">[</span><span class="s1">&#39;metadatas&#39;</span><span class="p">]</span>
+<span class="go">([&#39;piece&#39;], [&#39;contents for piece&#39;], [{&#39;author&#39;: &#39;me&#39;}])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">of</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="s1">&#39;of&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">of</span><span class="p">[</span><span class="s1">&#39;ids&#39;</span><span class="p">],</span> <span class="n">of</span><span class="p">[</span><span class="s1">&#39;documents&#39;</span><span class="p">],</span> <span class="n">of</span><span class="p">[</span><span class="s1">&#39;metadatas&#39;</span><span class="p">]</span>
+<span class="go">([&#39;of&#39;], [&#39;contents for of&#39;], [{&#39;author&#39;: &#39;you&#39;}])</span>
 </pre></div>
 </div>
 <p>You can also read multiple documents at once.
@@ -174,14 +166,9 @@ But note that the order of the documents is not guaranteed.</p>
 <span class="gp">... </span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>  <span class="c1"># sorting because order is not guaranteed</span>
 <span class="go">[&#39;cake&#39;, &#39;of&#39;, &#39;piece&#39;]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">collection</span><span class="p">[</span><span class="s1">&#39;cake&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s1">&#39;ids&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;cake&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;embeddings&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;metadatas&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;documents&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;contents for cake&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;uris&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cake</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="s1">&#39;cake&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cake</span><span class="p">[</span><span class="s1">&#39;ids&#39;</span><span class="p">],</span> <span class="n">cake</span><span class="p">[</span><span class="s1">&#39;documents&#39;</span><span class="p">],</span> <span class="n">cake</span><span class="p">[</span><span class="s1">&#39;metadatas&#39;</span><span class="p">]</span>
+<span class="go">([&#39;cake&#39;], [&#39;contents for cake&#39;], [None])</span>
 </pre></div>
 </div>
 <p># In fact, see that if you only want to specify the “documents” part of the information,
