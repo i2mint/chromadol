@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "chromadol"
-version = "0.1.3"
+version = "0.1.4"
 description = "Data Object Layer for ChromaDB"
 readme = "README.md"
 requires-python = ">=3.10"
