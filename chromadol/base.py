@@ -102,20 +102,42 @@ def get_collection(
     return codec(c)
 
 
+@appendable(item2kv=uuid_key)
+class AppendableChromaCollection(ChromaCollection):
+    """ChromaCollection with ``append`` and ``extend``, auto-generating uuid keys.
+
+    Items are the raw ``chromadb`` kwargs mappings that
+    :meth:`ChromaCollection.__setitem__` accepts (e.g.
+    ``{"documents": ..., "metadatas": ...}``) -- use this when you need to append
+    more than the single field the codec-ed stores below expose.
+    """
+
+
+# NOTE: `appendable` must be applied OUTSIDE any value codec. Applied inside,
+# dol's class-wrapping re-installs `append`/`extend` as delegated attributes bound
+# to the un-codec'd leaf store, so appended values bypass the codec and reach
+# `ChromaCollection.__setitem__` raw. See https://github.com/i2mint/chromadol/issues/2
+
+
+@appendable(item2kv=uuid_key)
 @ValueCodecs.single_nested_value("documents")
-@appendable(item2kv=uuid_key)
 class ChromaDocuments(ChromaCollection):
-    """ChromaCollection but reading and writing only the 'documents' field."""
+    """ChromaCollection but reading and writing only the 'documents' field.
+
+    ``append`` and ``extend`` take the same values ``__setitem__`` takes (that is,
+    the 'documents' field's value), generating uuid keys for them. To write raw
+    ``chromadb`` kwargs instead, use ``AppendableChromaCollection``.
+    """
 
 
-@ValueCodecs.single_nested_value("uris")
 @appendable(item2kv=uuid_key)
+@ValueCodecs.single_nested_value("uris")
 class ChromaUris(ChromaCollection):
     """ChromaCollection but reading and writing only the 'uris' field."""
 
 
-@ValueCodecs.single_nested_value("metadata")
 @appendable(item2kv=uuid_key)
+@ValueCodecs.single_nested_value("metadata")
 class ChromaUris(ChromaCollection):
     """ChromaCollection but reading and writing only the 'uris' field."""
 
