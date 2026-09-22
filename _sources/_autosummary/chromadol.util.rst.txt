@@ -1,0 +1,27 @@
+chromadol.util
+==============
+
+.. automodule:: chromadol.util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_if_missing
+      argument_value
+      identity
+      ids_not_in_collection
+      indices_of_id_not_in_collection
+      keep_only_include_keys
+      map_arguments
+      mapped_list
+      subdict
+      transform_methods_to_keep_only_include_keys
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Delegator
+   

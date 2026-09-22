@@ -1,0 +1,23 @@
+chromadol.base
+==============
+
+.. automodule:: chromadol.base
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_collection
+      identity
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AppendableChromaCollection
+      ChromaClient
+      ChromaCollection
+      ChromaDocuments
+      ChromaUris
+   

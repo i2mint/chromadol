@@ -1,0 +1,149 @@
+# chromadol
+
+Data Object Layer (DOL) for ChromaDB
+
+Example usage:
+
+To make a `ChromaClient` DOL, you can specify a `chromadb` `Client`, `PersistentClient` (etc.)
+instance, or specify a string (which will be interpreted as a path to a directory to
+save the data to in a `PersistentClient` instance).
+
+```pycon
+>>> from chromadol import ChromaClient
+>>> import tempfile, os
+>>> with tempfile.TemporaryDirectory() as temp_dir:
+...     tempdir = os.path.join(temp_dir, "chromadol_test")
+...     os.makedirs(tempdir)
+>>> client = ChromaClient(tempdir)
+```
+
+Removing all contents of client to be able to run a test on a clean slate
+
+```pycon
+>>> for k in client:
+...     del client[k]
+...
+```
+
+There’s nothing yet:
+
+```pycon
+>>> list(client)
+[]
+```
+
+Now let’s “get” a collection.
+
+```pycon
+>>> collection = client['chromadol_test']
+```
+
+Note that just accessing the collection creates it (by default)
+
+```pycon
+>>> list(client)
+['chromadol_test']
+```
+
+Here’s nothing in the collection yet:
+
+```pycon
+>>> list(collection)
+[]
+```
+
+So let’s write something.
+Note that `chromadb` is designed to operate on multiple documents at once,
+so the “chromadb-natural” way of specifying it’s keys and contents (and any extras)
+would be like this:
+
+```pycon
+>>> collection[['piece', 'of']] = {
+...     'documents': ['contents for piece', 'contents for of'],
+...     'metadatas': [{'author': 'me'}, {'author': 'you'}],
+... }
+```
+
+Now we have two documents in the collection:
+
+```pycon
+>>> len(collection)
+2
+```
+
+Note, though, that the order of the documents is not guaranteed.
+
+```pycon
+>>> sorted(collection)
+['of', 'piece']
+```
+
+Reading a key back returns a `chromadb` record. Its meaningful fields are
+`ids`, `documents` and `metadatas` (`chromadb` also manages
+`embeddings`/`uris`/`data`/`included`, whose presence and defaults
+vary by version), so we check the meaningful fields:
+
+```pycon
+>>> piece = collection['piece']
+>>> piece['ids'], piece['documents'], piece['metadatas']
+(['piece'], ['contents for piece'], [{'author': 'me'}])
+>>> of = collection['of']
+>>> of['ids'], of['documents'], of['metadatas']
+(['of'], ['contents for of'], [{'author': 'you'}])
+```
+
+You can also read multiple documents at once.
+But note that the order of the documents is not guaranteed.
+
+```pycon
+>>> collection[['piece', 'of']] == collection[['of', 'piece']]
+True
+```
+
+You can read or write one document at a time too.
+
+```pycon
+>>> collection['cake'] = {
+...     "documents": "contents for cake",
+... }
+>>> sorted(collection)  # sorting because order is not guaranteed
+['cake', 'of', 'piece']
+>>> cake = collection['cake']
+>>> cake['ids'], cake['documents'], cake['metadatas']
+(['cake'], ['contents for cake'], [None])
+```
+
+# In fact, see that if you only want to specify the “documents” part of the information,
+# you can just write a string instead of a dictionary:
+
+# >>> collection[‘cake’] = ‘a different cake’
+# >>> assert collection[‘cake’] == {
+# …     ‘ids’: [‘cake’],
+# …     ‘embeddings’: None,
+# …     ‘metadatas’: [None],
+# …     ‘documents’: [‘a different cake’],
+# …     ‘uris’: None,
+# …     ‘data’: None,
+# … }
+
+# The `collection` instance is not only dict-like, but also list-like in the
+# sense that it has an `.append` and an `.extend` method.
+
+# >>> len(collection)
+# 3
+# >>> collection.extend([‘two documents’, ‘specified without keys’])
+# >>> len(collection)
+# 5
+
+# See that the two documents were added to the collection, and that they were assigned
+# keys automatically:
+
+# >>> list(collection)  # doctest: +SKIP
+# [‘piece’, ‘of’, ‘cake’, ‘1704294539590875904’, ‘1704294539631522048’]
+
+### Modules
+
+| [`base`](chromadol.base.html.md#module-chromadol.base)                 | Base objects for chromadol.   |
+|---------------------------------------------------------------------------------------------|-------------------------------|
+| [`data_loaders`](chromadol.data_loaders.html.md#module-chromadol.data_loaders) | Data loaders for ChromaDB.    |
+| [`util`](chromadol.util.html.md#module-chromadol.util)                 | Utils for chromadol.          |

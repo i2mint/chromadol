@@ -1,4 +1,0 @@
-chromadol.tests.test_util
-=========================
-.. automodule:: chromadol.tests.test_util
-   :members:

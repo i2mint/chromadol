@@ -1,0 +1,23 @@
+chromadol.data\_loaders
+=======================
+
+.. automodule:: chromadol.data_loaders
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      load_bytes
+      load_text
+      pdf_file_text
+      test_file_loader
+      url_to_contents
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      FileLoader
+      MappingLoader
+   

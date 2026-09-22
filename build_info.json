@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-09-22T13:25:31Z",
+  "package": {
+    "name": "chromadol",
+    "version": "0.1.5",
+    "display_name": "chromadol",
+    "source": "pyproject.toml"
+  },
+  "git": {
+    "available": true,
+    "commit": "ed5038123f4b3e84a92af71450ac4516c6e08138",
+    "short_commit": "ed50381",
+    "branch": "master",
+    "tags": [
+      "0.1.5"
+    ],
+    "dirty": false,
+    "remote_url": "https://github.com/i2mint/chromadol",
+    "commit_url": "https://github.com/i2mint/chromadol/commit/ed5038123f4b3e84a92af71450ac4516c6e08138",
+    "error": null
+  },
+  "ci": {
+    "provider": "github",
+    "repository": "i2mint/chromadol",
+    "sha": "5411dcb5d2894a976e338893abd8ed019dba9ad1",
+    "sha_in_history": true,
+    "ref": "refs/heads/master",
+    "ref_name": "master",
+    "run_id": "35733101274",
+    "run_url": "https://github.com/i2mint/chromadol/actions/runs/35733101274",
+    "server_url": "https://github.com"
+  },
+  "tools": {
+    "epythet": "0.2.12",
+    "sphinx": "9.1.0",
+    "docutils": "0.22.4",
+    "python": "3.12.14"
+  },
+  "config": {
+    "theme": "auto",
+    "html_theme": "sphinxawesome_theme",
+    "accent": "#006c35",
+    "mode": "auto",
+    "api_generator": "autosummary",
+    "ignore": [
+      "tests/",
+      "scrap/",
+      "examples/"
+    ],
+    "agent_outputs": true,
+    "aggregates": [
+      "md"
+    ],
+    "ai_artifacts": true,
+    "provenance": true,
+    "docs_dir": "docsrc"
+  },
+  "site": {
+    "modules_documented": 4,
+    "objects_documented": 17
+  },
+  "pypi": {
+    "checked": true,
+    "latest": "0.1.5",
+    "relation": "same",
+    "error": null
+  },
+  "reproduce": "git clone https://github.com/i2mint/chromadol && cd chromadol\ngit checkout ed5038123f4b3e84a92af71450ac4516c6e08138\npip install \"epythet==0.2.12\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "warnings": [],
+  "alignment": {
+    "aligned": true,
+    "notes": []
+  }
+}

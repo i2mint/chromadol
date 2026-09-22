@@ -1,0 +1,22 @@
+# chromadol
+
+> Data Object Layer for ChromaDB
+
+
+## Pages
+
+- [chromadol](index.html.md): Data Object Layer for ChromaDB
+- [API reference](api.html.md): | &#96;chromadol&#96;   | Data Object Layer (DOL) for ChromaDB   |
+- [chromadol](_autosummary/chromadol.html.md): Data Object Layer (DOL) for ChromaDB
+- [chromadol.base](_autosummary/chromadol.base.html.md): Base objects for chromadol.
+- [chromadol.data_loaders](_autosummary/chromadol.data_loaders.html.md): Data loaders for ChromaDB.
+- [chromadol.util](_autosummary/chromadol.util.html.md): Utils for chromadol.
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-09-22 13:25 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
+
+## Optional
+
+- [chromadol.md](chromadol.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

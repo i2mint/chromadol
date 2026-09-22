@@ -1,4 +1,0 @@
-chromadol
-=========
-.. automodule:: chromadol
-   :members:
