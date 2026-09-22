@@ -133,13 +133,22 @@ class ChromaDocuments(ChromaCollection):
 @appendable(item2kv=uuid_key)
 @ValueCodecs.single_nested_value("uris")
 class ChromaUris(ChromaCollection):
-    """ChromaCollection but reading and writing only the 'uris' field."""
+    """ChromaCollection but reading and writing only the 'uris' field.
+
+    Writing uris needs a collection created with a ``data_loader`` (see
+    ``chromadol.data_loaders``); ``chromadb`` refuses uris without one.
+    """
 
 
-@appendable(item2kv=uuid_key)
-@ValueCodecs.single_nested_value("metadata")
-class ChromaUris(ChromaCollection):
-    """ChromaCollection but reading and writing only the 'uris' field."""
+@ValueCodecs.single_nested_value("metadatas")
+class ChromaMetadatas(ChromaCollection):
+    """ChromaCollection but reading and writing only the 'metadatas' field.
+
+    Mainly a read view: ``chromadb`` refuses an ``upsert`` that carries neither
+    documents nor images, so writing metadata alone raises (that is also why this
+    one has no ``append``). Write metadata with the documents, through
+    ``ChromaCollection`` or ``AppendableChromaCollection``.
+    """
 
 
 class ChromaClient(MutableMapping):

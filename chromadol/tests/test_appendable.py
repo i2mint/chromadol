@@ -14,6 +14,7 @@ from chromadol.base import (
     AppendableChromaCollection,
     ChromaCollection,
     ChromaDocuments,
+    ChromaMetadatas,
     ChromaUris,
 )
 
@@ -100,3 +101,35 @@ def test_appendable_chroma_collection_appends_raw_chromadb_kwargs(tmp_path):
     record = raw[key]
     assert record["documents"] == ["raw document"]
     assert record["metadatas"] == [{"author": "me"}]
+
+
+@pytest.mark.parametrize(
+    "store_cls, field",
+    [
+        (ChromaDocuments, "documents"),
+        (ChromaUris, "uris"),
+        (ChromaMetadatas, "metadatas"),
+    ],
+    ids=lambda x: getattr(x, "__name__", x),
+)
+def test_single_field_stores_write_their_own_chromadb_field(store_cls, field):
+    """Each single-field store must write the ``chromadb`` kwarg it is named for.
+
+    ``ChromaUris`` used to be silently redefined by a second class (field
+    ``"metadata"``, not even a ``chromadb`` kwarg), so every write raised
+    ``TypeError: upsert() got an unexpected keyword argument 'metadata'``.
+    """
+    collection = _RecordingCollection()
+    store_cls(collection)["a_key"] = "a value"
+    ((_ids, kwargs),) = collection.upserts
+    assert list(kwargs) == [field]
+
+
+def test_chroma_metadatas_reads_the_metadatas_field(tmp_path):
+    client = chromadb.PersistentClient(str(tmp_path / "metas"))
+    collection = client.create_collection("metas", get_or_create=True)
+    ChromaCollection(collection)["k"] = {
+        "documents": "doc",
+        "metadatas": {"author": "me"},
+    }
+    assert ChromaMetadatas(collection)["k"] == [{"author": "me"}]
