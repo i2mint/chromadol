@@ -23,7 +23,11 @@ appendable_stores = [ChromaDocuments, ChromaUris]
 
 
 class _RecordingCollection:
-    """Minimal stand-in for a ``chromadb`` Collection, recording ``upsert`` calls."""
+    """Minimal stand-in for a ``chromadb`` Collection, recording writes.
+
+    ``upsert`` and ``add`` are both recorded in ``upserts`` (``ChromaUris`` has
+    to ``add``, because only ``add`` embeds uris in ``chromadb``).
+    """
 
     def __init__(self):
         self.upserts = []
@@ -31,8 +35,16 @@ class _RecordingCollection:
     def upsert(self, ids, **kwargs):
         self.upserts.append((ids, kwargs))
 
-    def get(self, ids=None):
-        return {"ids": [ids for ids, _ in self.upserts]}
+    add = upsert
+
+    def get(self, ids=None, include=None):
+        wanted = None if ids is None else ([ids] if isinstance(ids, str) else ids)
+        written = [
+            i
+            for recorded, _ in self.upserts
+            for i in ([recorded] if isinstance(recorded, str) else recorded)
+        ]
+        return {"ids": [i for i in written if wanted is None or i in wanted]}
 
     def count(self):
         return len(self.upserts)
@@ -133,3 +145,53 @@ def test_chroma_metadatas_reads_the_metadatas_field(tmp_path):
         "metadatas": {"author": "me"},
     }
     assert ChromaMetadatas(collection)["k"] == [{"author": "me"}]
+
+
+def _uris_store(tmp_path, name):
+    """A ``ChromaUris`` over a collection that loads uris as text files."""
+    from chromadol.data_loaders import FileLoader
+
+    client = chromadb.PersistentClient(str(tmp_path / name))
+    collection = client.create_collection(name, data_loader=FileLoader())
+    return ChromaUris(collection), collection
+
+
+def test_chroma_uris_round_trips_against_real_chromadb(tmp_path):
+    """Write, read, overwrite and append uris on a real ``chromadb`` collection.
+
+    ``upsert`` refuses a record with only uris ("Exactly one of documents,
+    images must be provided"), and a default ``get`` leaves ``uris`` out, so a
+    store that upserts and reads with the default include can neither write nor
+    read. A recording fake cannot see either problem.
+    """
+    for name in ("a", "b", "c"):
+        (tmp_path / f"{name}.txt").write_text(f"contents of {name}")
+    uris, collection = _uris_store(tmp_path, "uristest")
+    a, b, c = (str(tmp_path / f"{n}.txt") for n in "abc")
+
+    uris["k"] = a
+    assert uris["k"] == [a]
+    uris["k"] = c  # overwrite a key that has no metadata
+    assert uris["k"] == [c]
+
+    collection.update(ids="k", metadatas={"author": "me"})
+    uris["k"] = b  # overwrite an existing key
+    assert uris["k"] == [b]
+    assert collection.get("k")["metadatas"] == [{"author": "me"}]
+    assert len(uris) == 1
+
+    uris.append(c)
+    assert len(uris) == 2
+    assert sorted(uris[key][0] for key in uris) == [b, c]
+
+
+def test_chroma_uris_overwrite_that_fails_keeps_the_old_record(tmp_path):
+    (tmp_path / "a.txt").write_text("contents of a")
+    uris, collection = _uris_store(tmp_path, "uriskeep")
+    a = str(tmp_path / "a.txt")
+    uris["k"] = a
+
+    with pytest.raises(Exception):
+        uris["k"] = str(tmp_path / "missing.txt")  # the data loader can't load it
+
+    assert uris["k"] == [a]

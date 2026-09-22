@@ -50,8 +50,15 @@ class ChromaCollection(MutableMapping):
     def __iter__(self):
         return iter(self._ids)
 
+    #: The ``include`` that reads pass to ``collection.get``. ``None`` keeps
+    #: chromadb's default (documents and metadatas); a single-field store whose
+    #: field is not in that default (e.g. ``uris``) names it here.
+    get_include: tuple[str, ...] | None = None
+
     def __getitem__(self, k: str) -> GetResult:
-        return self.collection.get(k)
+        if self.get_include is None:
+            return self.collection.get(k)
+        return self.collection.get(k, include=list(self.get_include))
 
     def __len__(self):
         return self.collection.count()
@@ -130,14 +137,53 @@ class ChromaDocuments(ChromaCollection):
     """
 
 
+def _nones_to_none(values):
+    """``None`` if every item is ``None`` (chromadb's "field not given")."""
+    if values is None or all(x is None for x in values):
+        return None
+    return values
+
+
 @appendable(item2kv=uuid_key)
 @ValueCodecs.single_nested_value("uris")
 class ChromaUris(ChromaCollection):
     """ChromaCollection but reading and writing only the 'uris' field.
 
     Writing uris needs a collection created with a ``data_loader`` (see
-    ``chromadol.data_loaders``); ``chromadb`` refuses uris without one.
+    ``chromadol.data_loaders``): the record is embedded from the data it loads.
+    ``chromadb`` only does that in ``add`` (``upsert`` and ``update`` embed only
+    documents or images), so a new key is added and an existing key is replaced
+    (delete, then add, keeping its metadata), and restored if the add fails.
     """
+
+    get_include = ("uris",)
+
+    def __setitem__(self, k, v: dict):
+        ids = [k] if isinstance(k, str) else list(k)
+        old = self.collection.get(
+            ids, include=["embeddings", "metadatas", "documents", "uris"]
+        )
+        if not old["ids"]:
+            return self.collection.add(ids, **v)
+        if "metadatas" not in v:  # keep metadata, as ``upsert`` would
+            old_metas = dict(zip(old["ids"], old["metadatas"]))
+            metas = _nones_to_none([old_metas.get(i) or None for i in ids])
+            if metas is not None:
+                v = {**v, "metadatas": metas}
+        self.collection.delete(old["ids"])
+        try:
+            return self.collection.add(ids, **v)
+        except Exception:
+            self.collection.add(
+                ids=old["ids"],
+                embeddings=old["embeddings"],
+                # chromadb reads a record without metadata back as ``{}`` but
+                # refuses ``{}`` on write
+                metadatas=_nones_to_none([m or None for m in old["metadatas"]]),
+                documents=_nones_to_none(old["documents"]),
+                uris=old["uris"],
+            )
+            raise
 
 
 @ValueCodecs.single_nested_value("metadatas")
