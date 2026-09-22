@@ -19,5 +19,6 @@ chromadol.base
       ChromaClient
       ChromaCollection
       ChromaDocuments
+      ChromaMetadatas
       ChromaUris
    

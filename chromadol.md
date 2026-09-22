@@ -1,4 +1,4 @@
-> built 2026-09-22 13:25 UTC from ed50381 (master) · chromadol 0.1.5. Details: build_info.json
+> built 2026-09-22 14:13 UTC from 108b8da (master) · chromadol 0.1.6. Details: build_info.json
 
 # index.html.md
 
@@ -168,6 +168,7 @@ Base objects for chromadol.
 | [`ChromaClient`](_autosummary/chromadol.base.html.md#chromadol.base.ChromaClient)([client, decoder, get_or_create]) |                                                                           |
 | [`ChromaCollection`](_autosummary/chromadol.base.html.md#chromadol.base.ChromaCollection)(collection)                   |                                                                           |
 | [`ChromaDocuments`](_autosummary/chromadol.base.html.md#chromadol.base.ChromaDocuments)(collection)                    | ChromaCollection but reading and writing only the 'documents' field.      |
+| [`ChromaMetadatas`](_autosummary/chromadol.base.html.md#chromadol.base.ChromaMetadatas)(collection)                    | ChromaCollection but reading and writing only the 'metadatas' field.      |
 | [`ChromaUris`](_autosummary/chromadol.base.html.md#chromadol.base.ChromaUris)(collection)                         | ChromaCollection but reading and writing only the 'uris' field.           |
 
 ### *class* chromadol.base.AppendableChromaCollection(collection)
@@ -213,11 +214,25 @@ ChromaCollection but reading and writing only the ‘documents’ field.
 the ‘documents’ field’s value), generating uuid keys for them. To write raw
 `chromadb` kwargs instead, use `AppendableChromaCollection`.
 
+### *class* chromadol.base.ChromaMetadatas(collection)
+
+Bases: `Store`
+
+ChromaCollection but reading and writing only the ‘metadatas’ field.
+
+Mainly a read view: `chromadb` refuses an `upsert` that carries neither
+documents nor images, so writing metadata alone raises (that is also why this
+one has no `append`). Write metadata with the documents, through
+`ChromaCollection` or `AppendableChromaCollection`.
+
 ### *class* chromadol.base.ChromaUris(collection)
 
 Bases: [`ChromaUris`](_autosummary/chromadol.base.html.md#chromadol.base.ChromaUris)
 
 ChromaCollection but reading and writing only the ‘uris’ field.
+
+Writing uris needs a collection created with a `data_loader` (see
+`chromadol.data_loaders`); `chromadb` refuses uris without one.
 
 
 # _autosummary/chromadol.data_loaders.html.md
@@ -544,7 +559,7 @@ accordingly.
 
 # About this build
 
-This documentation was built on **2026-09-22 13:25 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/ed5038123f4b3e84a92af71450ac4516c6e08138"><code>ed50381</code></a> on branch <code>master</code>, for **chromadol 0.1.5** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-09-22 14:13 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/108b8da13d4dd315249f47efc0cdbb1a3648ad7c"><code>108b8da</code></a> on branch <code>master</code>, for **chromadol 0.1.6** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -553,9 +568,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/chromadol/commit/ed5038123f4b3e84a92af71450ac4516c6e08138"><code>ed5038123f4b3e84a92af71450ac4516c6e08138</code></a> |
+| Commit              | <a href="https://github.com/i2mint/chromadol/commit/108b8da13d4dd315249f47efc0cdbb1a3648ad7c"><code>108b8da13d4dd315249f47efc0cdbb1a3648ad7c</code></a> |
 | Branch              | <code>master</code>                                                                                                                                     |
-| Tags at this commit | <code>0.1.5</code>                                                                                                                                      |
+| Tags at this commit | <code>0.1.6</code>                                                                                                                                      |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/i2mint/chromadol</code>                                                                                                        |
 
@@ -564,9 +579,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/chromadol</code>                                                              |
-| Run          | <a href="https://github.com/i2mint/chromadol/actions/runs/35733101274">35733101274</a>     |
+| Run          | <a href="https://github.com/i2mint/chromadol/actions/runs/35738559617">35738559617</a>     |
 | Ref          | <code>refs/heads/master</code>                                                             |
-| Event commit | <code>5411dcb5d2894a976e338893abd8ed019dba9ad1</code> (in the history of the built commit) |
+| Event commit | <code>fab2bc594d0d68b6aa5d2a1977f5c223eca55a7e</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -591,13 +606,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/chromadol/0.1.5/">0.1.5</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/chromadol/0.1.6/">0.1.6</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/chromadol && cd chromadol
-git checkout ed5038123f4b3e84a92af71450ac4516c6e08138
+git checkout 108b8da13d4dd315249f47efc0cdbb1a3648ad7c
 pip install "epythet==0.2.12"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

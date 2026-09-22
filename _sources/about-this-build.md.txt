@@ -5,7 +5,7 @@ orphan: true
 
 # About this build
 
-This documentation was built on **2026-09-22 13:25 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/ed5038123f4b3e84a92af71450ac4516c6e08138"><code>ed50381</code></a> on branch <code>master</code>, for **chromadol 0.1.5** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-09-22 14:13 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/108b8da13d4dd315249f47efc0cdbb1a3648ad7c"><code>108b8da</code></a> on branch <code>master</code>, for **chromadol 0.1.6** (from <code>pyproject.toml</code>).
 
 :::{note}
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -15,9 +15,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 | | |
 |---|---|
-| Commit | <a href="https://github.com/i2mint/chromadol/commit/ed5038123f4b3e84a92af71450ac4516c6e08138"><code>ed5038123f4b3e84a92af71450ac4516c6e08138</code></a> |
+| Commit | <a href="https://github.com/i2mint/chromadol/commit/108b8da13d4dd315249f47efc0cdbb1a3648ad7c"><code>108b8da13d4dd315249f47efc0cdbb1a3648ad7c</code></a> |
 | Branch | <code>master</code> |
-| Tags at this commit | <code>0.1.5</code> |
+| Tags at this commit | <code>0.1.6</code> |
 | Working tree | clean |
 | Remote | <code>https://github.com/i2mint/chromadol</code> |
 
@@ -26,9 +26,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 | | |
 |---|---|
 | Repository | <code>i2mint/chromadol</code> |
-| Run | <a href="https://github.com/i2mint/chromadol/actions/runs/35733101274">35733101274</a> |
+| Run | <a href="https://github.com/i2mint/chromadol/actions/runs/35738559617">35738559617</a> |
 | Ref | <code>refs/heads/master</code> |
-| Event commit | <code>5411dcb5d2894a976e338893abd8ed019dba9ad1</code> (in the history of the built commit) |
+| Event commit | <code>fab2bc594d0d68b6aa5d2a1977f5c223eca55a7e</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -53,13 +53,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/chromadol/0.1.5/">0.1.5</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/chromadol/0.1.6/">0.1.6</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/chromadol && cd chromadol
-git checkout ed5038123f4b3e84a92af71450ac4516c6e08138
+git checkout 108b8da13d4dd315249f47efc0cdbb1a3648ad7c
 pip install "epythet==0.2.12"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

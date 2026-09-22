@@ -143,7 +143,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#chromadol.base.ChromaDocuments" title="chromadol.base.ChromaDocuments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChromaDocuments</span></code></a>(collection)</p></td>
 <td><p>ChromaCollection but reading and writing only the 'documents' field.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#chromadol.base.ChromaUris" title="chromadol.base.ChromaUris"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChromaUris</span></code></a>(collection)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#chromadol.base.ChromaMetadatas" title="chromadol.base.ChromaMetadatas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChromaMetadatas</span></code></a>(collection)</p></td>
+<td><p>ChromaCollection but reading and writing only the 'metadatas' field.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#chromadol.base.ChromaUris" title="chromadol.base.ChromaUris"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ChromaUris</span></code></a>(collection)</p></td>
 <td><p>ChromaCollection but reading and writing only the 'uris' field.</p></td>
 </tr>
 </tbody>
@@ -192,10 +195,22 @@ the ‘documents’ field’s value), generating uuid keys for them. To write ra
 <code class="docutils literal notranslate"><span class="pre">chromadb</span></code> kwargs instead, use <code class="docutils literal notranslate"><span class="pre">AppendableChromaCollection</span></code>.</p>
 </dd></dl>
 <dl class="py class">
+<dt class="sig sig-object py" id="chromadol.base.ChromaMetadatas">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">chromadol.base.</span></span><span class="sig-name descname"><span class="pre">ChromaMetadatas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/chromadol/base.html#ChromaMetadatas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#chromadol.base.ChromaMetadatas" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#chromadol.base.ChromaMetadatas'">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Store</span></code></p>
+<p>ChromaCollection but reading and writing only the ‘metadatas’ field.</p>
+<p>Mainly a read view: <code class="docutils literal notranslate"><span class="pre">chromadb</span></code> refuses an <code class="docutils literal notranslate"><span class="pre">upsert</span></code> that carries neither
+documents nor images, so writing metadata alone raises (that is also why this
+one has no <code class="docutils literal notranslate"><span class="pre">append</span></code>). Write metadata with the documents, through
+<code class="docutils literal notranslate"><span class="pre">ChromaCollection</span></code> or <code class="docutils literal notranslate"><span class="pre">AppendableChromaCollection</span></code>.</p>
+</dd></dl>
+<dl class="py class">
 <dt class="sig sig-object py" id="chromadol.base.ChromaUris">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">chromadol.base.</span></span><span class="sig-name descname"><span class="pre">ChromaUris</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/chromadol/base.html#ChromaUris"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#chromadol.base.ChromaUris" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#chromadol.base.ChromaUris'">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#chromadol.base.ChromaUris" title="chromadol.base.ChromaUris"><code class="xref py py-class docutils literal notranslate"><span class="pre">ChromaUris</span></code></a></p>
 <p>ChromaCollection but reading and writing only the ‘uris’ field.</p>
+<p>Writing uris needs a collection created with a <code class="docutils literal notranslate"><span class="pre">data_loader</span></code> (see
+<code class="docutils literal notranslate"><span class="pre">chromadol.data_loaders</span></code>); <code class="docutils literal notranslate"><span class="pre">chromadb</span></code> refuses uris without one.</p>
 </dd></dl>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -208,6 +223,7 @@ the ‘documents’ field’s value), generating uuid keys for them. To write ra
 </li>
 <li><a :data-current="activeSection === '#chromadol.base.ChromaCollection'" class="reference internal" href="#chromadol.base.ChromaCollection"><code class="docutils literal notranslate"><span class="pre">ChromaCollection</span></code></a></li>
 <li><a :data-current="activeSection === '#chromadol.base.ChromaDocuments'" class="reference internal" href="#chromadol.base.ChromaDocuments"><code class="docutils literal notranslate"><span class="pre">ChromaDocuments</span></code></a></li>
+<li><a :data-current="activeSection === '#chromadol.base.ChromaMetadatas'" class="reference internal" href="#chromadol.base.ChromaMetadatas"><code class="docutils literal notranslate"><span class="pre">ChromaMetadatas</span></code></a></li>
 <li><a :data-current="activeSection === '#chromadol.base.ChromaUris'" class="reference internal" href="#chromadol.base.ChromaUris"><code class="docutils literal notranslate"><span class="pre">ChromaUris</span></code></a></li>
 </ul>
 </div>
@@ -222,7 +238,7 @@ the ‘documents’ field’s value), generating uuid keys for them. To write ra
 </div>
 </footer>
 </div>
-<script src="../_static/documentation_options.js?v=59fadc99"></script>
+<script src="../_static/documentation_options.js?v=6e0256f3"></script>
 <script src="../_static/doctools.js?v=fd6eb6e6"></script>
 <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="../_static/clipboard.min.js?v=a7894cd8"></script>

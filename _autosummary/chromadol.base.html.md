@@ -15,6 +15,7 @@ Base objects for chromadol.
 | [`ChromaClient`](#chromadol.base.ChromaClient)([client, decoder, get_or_create]) |                                                                           |
 | [`ChromaCollection`](#chromadol.base.ChromaCollection)(collection)                   |                                                                           |
 | [`ChromaDocuments`](#chromadol.base.ChromaDocuments)(collection)                    | ChromaCollection but reading and writing only the 'documents' field.      |
+| [`ChromaMetadatas`](#chromadol.base.ChromaMetadatas)(collection)                    | ChromaCollection but reading and writing only the 'metadatas' field.      |
 | [`ChromaUris`](#chromadol.base.ChromaUris)(collection)                         | ChromaCollection but reading and writing only the 'uris' field.           |
 
 ### *class* chromadol.base.AppendableChromaCollection(collection)
@@ -60,8 +61,22 @@ ChromaCollection but reading and writing only the ‘documents’ field.
 the ‘documents’ field’s value), generating uuid keys for them. To write raw
 `chromadb` kwargs instead, use `AppendableChromaCollection`.
 
+### *class* chromadol.base.ChromaMetadatas(collection)
+
+Bases: `Store`
+
+ChromaCollection but reading and writing only the ‘metadatas’ field.
+
+Mainly a read view: `chromadb` refuses an `upsert` that carries neither
+documents nor images, so writing metadata alone raises (that is also why this
+one has no `append`). Write metadata with the documents, through
+`ChromaCollection` or `AppendableChromaCollection`.
+
 ### *class* chromadol.base.ChromaUris(collection)
 
 Bases: [`ChromaUris`](#chromadol.base.ChromaUris)
 
 ChromaCollection but reading and writing only the ‘uris’ field.
+
+Writing uris needs a collection created with a `data_loader` (see
+`chromadol.data_loaders`); `chromadb` refuses uris without one.

@@ -303,119 +303,131 @@
 
 </span><span id="line-131">
 </span><span id="line-132">
+<div class="viewcode-block" id="ChromaUris">
+<a class="viewcode-back" href="../../_autosummary/chromadol.base.html#chromadol.base.ChromaUris">[docs]</a>
 </span><span id="line-133"><span class="nd">@appendable</span><span class="p">(</span><span class="n">item2kv</span><span class="o">=</span><span class="n">uuid_key</span><span class="p">)</span>
 </span><span id="line-134"><span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s2">"uris"</span><span class="p">)</span>
 </span><span id="line-135"><span class="k">class</span><span class="w"> </span><span class="nc">ChromaUris</span><span class="p">(</span><span class="n">ChromaCollection</span><span class="p">):</span>
-</span><span id="line-136"><span class="w">    </span><span class="sd">"""ChromaCollection but reading and writing only the 'uris' field."""</span>
+</span><span id="line-136"><span class="w">    </span><span class="sd">"""ChromaCollection but reading and writing only the 'uris' field.</span>
 </span><span id="line-137">
-</span><span id="line-138">
-<div class="viewcode-block" id="ChromaUris">
-<a class="viewcode-back" href="../../_autosummary/chromadol.base.html#chromadol.base.ChromaUris">[docs]</a>
-</span><span id="line-139"><span class="nd">@appendable</span><span class="p">(</span><span class="n">item2kv</span><span class="o">=</span><span class="n">uuid_key</span><span class="p">)</span>
-</span><span id="line-140"><span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s2">"metadata"</span><span class="p">)</span>
-</span><span id="line-141"><span class="k">class</span><span class="w"> </span><span class="nc">ChromaUris</span><span class="p">(</span><span class="n">ChromaCollection</span><span class="p">):</span>
-</span><span id="line-142"><span class="w">    </span><span class="sd">"""ChromaCollection but reading and writing only the 'uris' field."""</span></div>
+</span><span id="line-138"><span class="sd">    Writing uris needs a collection created with a ``data_loader`` (see</span>
+</span><span id="line-139"><span class="sd">    ``chromadol.data_loaders``); ``chromadb`` refuses uris without one.</span>
+</span><span id="line-140"><span class="sd">    """</span></div>
 
-</span><span id="line-143">
-</span><span id="line-144">
+</span><span id="line-141">
+</span><span id="line-142">
+<div class="viewcode-block" id="ChromaMetadatas">
+<a class="viewcode-back" href="../../_autosummary/chromadol.base.html#chromadol.base.ChromaMetadatas">[docs]</a>
+</span><span id="line-143"><span class="nd">@ValueCodecs</span><span class="o">.</span><span class="n">single_nested_value</span><span class="p">(</span><span class="s2">"metadatas"</span><span class="p">)</span>
+</span><span id="line-144"><span class="k">class</span><span class="w"> </span><span class="nc">ChromaMetadatas</span><span class="p">(</span><span class="n">ChromaCollection</span><span class="p">):</span>
+</span><span id="line-145"><span class="w">    </span><span class="sd">"""ChromaCollection but reading and writing only the 'metadatas' field.</span>
+</span><span id="line-146">
+</span><span id="line-147"><span class="sd">    Mainly a read view: ``chromadb`` refuses an ``upsert`` that carries neither</span>
+</span><span id="line-148"><span class="sd">    documents nor images, so writing metadata alone raises (that is also why this</span>
+</span><span id="line-149"><span class="sd">    one has no ``append``). Write metadata with the documents, through</span>
+</span><span id="line-150"><span class="sd">    ``ChromaCollection`` or ``AppendableChromaCollection``.</span>
+</span><span id="line-151"><span class="sd">    """</span></div>
+
+</span><span id="line-152">
+</span><span id="line-153">
 <div class="viewcode-block" id="ChromaClient">
 <a class="viewcode-back" href="../../_autosummary/chromadol.base.html#chromadol.base.ChromaClient">[docs]</a>
-</span><span id="line-145"><span class="k">class</span><span class="w"> </span><span class="nc">ChromaClient</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">):</span>
-</span><span id="line-146">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="line-147">        <span class="bp">self</span><span class="p">,</span>
-</span><span id="line-148">        <span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-</span><span id="line-149">        <span class="o">*</span><span class="p">,</span>
-</span><span id="line-150">        <span class="n">decoder</span><span class="o">=</span><span class="n">ChromaCollection</span><span class="p">,</span>
-</span><span id="line-151">        <span class="n">get_or_create</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-</span><span id="line-152">        <span class="o">**</span><span class="n">create_collection_kwargs</span><span class="p">,</span>
-</span><span id="line-153">    <span class="p">):</span>
-</span><span id="line-154"><span class="w">        </span><span class="sd">"""</span>
-</span><span id="line-155"><span class="sd">        Initializes the reader with a chromadb Client instance.</span>
-</span><span id="line-156">
-</span><span id="line-157"><span class="sd">        :param client: An instance of chromadb.Client.</span>
-</span><span id="line-158"><span class="sd">        """</span>
-</span><span id="line-159">        <span class="k">if</span> <span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-160">            <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
-</span><span id="line-161">        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-162">            <span class="n">client</span> <span class="o">=</span> <span class="n">PersistentClient</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
-</span><span id="line-163">        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
-</span><span id="line-164">        <span class="bp">self</span><span class="o">.</span><span class="n">_create_collection_kwargs_for_getitem</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
-</span><span id="line-165">            <span class="n">create_collection_kwargs</span><span class="p">,</span> <span class="n">get_or_create</span><span class="o">=</span><span class="n">get_or_create</span>
-</span><span id="line-166">        <span class="p">)</span>
-</span><span id="line-167">        <span class="bp">self</span><span class="o">.</span><span class="n">_create_collection_kwargs_for_setitem</span> <span class="o">=</span> <span class="n">create_collection_kwargs</span>
-</span><span id="line-168">        <span class="bp">self</span><span class="o">.</span><span class="n">_decoder</span> <span class="o">=</span> <span class="n">decoder</span> <span class="ow">or</span> <span class="n">identity</span>
-</span><span id="line-169">
-</span><span id="line-170">    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="line-171"><span class="w">        </span><span class="sd">"""</span>
-</span><span id="line-172"><span class="sd">        Iterates over the names of collections in the chromadb Client.</span>
-</span><span id="line-173"><span class="sd">        """</span>
-</span><span id="line-174">        <span class="k">return</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">list_collections</span><span class="p">())</span>
-</span><span id="line-175">
-</span><span id="line-176">    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-177"><span class="w">        </span><span class="sd">"""</span>
-</span><span id="line-178"><span class="sd">        Retrieves a collection by its name. Creates the collection if it doesn't exist.</span>
-</span><span id="line-179">
-</span><span id="line-180"><span class="sd">        :param k: The name of the collection to retrieve.</span>
-</span><span id="line-181"><span class="sd">        :return: The collection object.</span>
+</span><span id="line-154"><span class="k">class</span><span class="w"> </span><span class="nc">ChromaClient</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">):</span>
+</span><span id="line-155">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="line-156">        <span class="bp">self</span><span class="p">,</span>
+</span><span id="line-157">        <span class="n">client</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="line-158">        <span class="o">*</span><span class="p">,</span>
+</span><span id="line-159">        <span class="n">decoder</span><span class="o">=</span><span class="n">ChromaCollection</span><span class="p">,</span>
+</span><span id="line-160">        <span class="n">get_or_create</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="line-161">        <span class="o">**</span><span class="n">create_collection_kwargs</span><span class="p">,</span>
+</span><span id="line-162">    <span class="p">):</span>
+</span><span id="line-163"><span class="w">        </span><span class="sd">"""</span>
+</span><span id="line-164"><span class="sd">        Initializes the reader with a chromadb Client instance.</span>
+</span><span id="line-165">
+</span><span id="line-166"><span class="sd">        :param client: An instance of chromadb.Client.</span>
+</span><span id="line-167"><span class="sd">        """</span>
+</span><span id="line-168">        <span class="k">if</span> <span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-169">            <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+</span><span id="line-170">        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-171">            <span class="n">client</span> <span class="o">=</span> <span class="n">PersistentClient</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+</span><span id="line-172">        <span class="bp">self</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">client</span>
+</span><span id="line-173">        <span class="bp">self</span><span class="o">.</span><span class="n">_create_collection_kwargs_for_getitem</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+</span><span id="line-174">            <span class="n">create_collection_kwargs</span><span class="p">,</span> <span class="n">get_or_create</span><span class="o">=</span><span class="n">get_or_create</span>
+</span><span id="line-175">        <span class="p">)</span>
+</span><span id="line-176">        <span class="bp">self</span><span class="o">.</span><span class="n">_create_collection_kwargs_for_setitem</span> <span class="o">=</span> <span class="n">create_collection_kwargs</span>
+</span><span id="line-177">        <span class="bp">self</span><span class="o">.</span><span class="n">_decoder</span> <span class="o">=</span> <span class="n">decoder</span> <span class="ow">or</span> <span class="n">identity</span>
+</span><span id="line-178">
+</span><span id="line-179">    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="line-180"><span class="w">        </span><span class="sd">"""</span>
+</span><span id="line-181"><span class="sd">        Iterates over the names of collections in the chromadb Client.</span>
 </span><span id="line-182"><span class="sd">        """</span>
-</span><span id="line-183">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decoder</span><span class="p">(</span>
-</span><span id="line-184">            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span>
-</span><span id="line-185">                <span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_collection_kwargs_for_getitem</span>
-</span><span id="line-186">            <span class="p">)</span>
-</span><span id="line-187">        <span class="p">)</span>
+</span><span id="line-183">        <span class="k">return</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">list_collections</span><span class="p">())</span>
+</span><span id="line-184">
+</span><span id="line-185">    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-186"><span class="w">        </span><span class="sd">"""</span>
+</span><span id="line-187"><span class="sd">        Retrieves a collection by its name. Creates the collection if it doesn't exist.</span>
 </span><span id="line-188">
-</span><span id="line-189">    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="line-190"><span class="w">        </span><span class="sd">"""</span>
-</span><span id="line-191"><span class="sd">        Creates or updates a collection.</span>
-</span><span id="line-192">
-</span><span id="line-193"><span class="sd">        :param k: The name of the collection.</span>
-</span><span id="line-194"><span class="sd">        :param v: a dict that will be used to populate the collection via .add_documents(**v)</span>
-</span><span id="line-195"><span class="sd">        """</span>
-</span><span id="line-196">        <span class="c1"># Implementation depends on how collections are created or updated in chromadb</span>
-</span><span id="line-197">        <span class="c1"># Example:</span>
-</span><span id="line-198">        <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span>
-</span><span id="line-199">            <span class="n">name</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_collection_kwargs_for_setitem</span>
-</span><span id="line-200">        <span class="p">)</span>
-</span><span id="line-201">        <span class="k">if</span> <span class="n">v</span><span class="p">:</span>
-</span><span id="line-202">            <span class="n">collection</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="o">**</span><span class="n">v</span><span class="p">)</span>
-</span><span id="line-203">
-</span><span id="line-204">    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="line-205"><span class="w">        </span><span class="sd">"""</span>
-</span><span id="line-206"><span class="sd">        Deletes a collection.</span>
-</span><span id="line-207">
-</span><span id="line-208"><span class="sd">        :param k: The name of the collection to delete.</span>
-</span><span id="line-209"><span class="sd">        """</span>
-</span><span id="line-210">        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete_collection</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
-</span><span id="line-211">
-</span><span id="line-212">    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="line-213"><span class="w">        </span><span class="sd">"""</span>
-</span><span id="line-214"><span class="sd">        Returns the number of collections in the client.</span>
-</span><span id="line-215"><span class="sd">        """</span>
-</span><span id="line-216">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">list_collections</span><span class="p">())</span>
-</span><span id="line-217">
-</span><span id="line-218">    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-</span><span id="line-219"><span class="w">        </span><span class="sd">"""</span>
-</span><span id="line-220"><span class="sd">        Returns True if the client has a collection with the given name.</span>
-</span><span id="line-221"><span class="sd">        """</span>
-</span><span id="line-222">        <span class="n">existing_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</span><span id="line-223">        <span class="k">return</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">existing_names</span>
-</span><span id="line-224">
+</span><span id="line-189"><span class="sd">        :param k: The name of the collection to retrieve.</span>
+</span><span id="line-190"><span class="sd">        :return: The collection object.</span>
+</span><span id="line-191"><span class="sd">        """</span>
+</span><span id="line-192">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_decoder</span><span class="p">(</span>
+</span><span id="line-193">            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span>
+</span><span id="line-194">                <span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_collection_kwargs_for_getitem</span>
+</span><span id="line-195">            <span class="p">)</span>
+</span><span id="line-196">        <span class="p">)</span>
+</span><span id="line-197">
+</span><span id="line-198">    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="line-199"><span class="w">        </span><span class="sd">"""</span>
+</span><span id="line-200"><span class="sd">        Creates or updates a collection.</span>
+</span><span id="line-201">
+</span><span id="line-202"><span class="sd">        :param k: The name of the collection.</span>
+</span><span id="line-203"><span class="sd">        :param v: a dict that will be used to populate the collection via .add_documents(**v)</span>
+</span><span id="line-204"><span class="sd">        """</span>
+</span><span id="line-205">        <span class="c1"># Implementation depends on how collections are created or updated in chromadb</span>
+</span><span id="line-206">        <span class="c1"># Example:</span>
+</span><span id="line-207">        <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">create_collection</span><span class="p">(</span>
+</span><span id="line-208">            <span class="n">name</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_collection_kwargs_for_setitem</span>
+</span><span id="line-209">        <span class="p">)</span>
+</span><span id="line-210">        <span class="k">if</span> <span class="n">v</span><span class="p">:</span>
+</span><span id="line-211">            <span class="n">collection</span><span class="o">.</span><span class="n">add_documents</span><span class="p">(</span><span class="o">**</span><span class="n">v</span><span class="p">)</span>
+</span><span id="line-212">
+</span><span id="line-213">    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="line-214"><span class="w">        </span><span class="sd">"""</span>
+</span><span id="line-215"><span class="sd">        Deletes a collection.</span>
+</span><span id="line-216">
+</span><span id="line-217"><span class="sd">        :param k: The name of the collection to delete.</span>
+</span><span id="line-218"><span class="sd">        """</span>
+</span><span id="line-219">        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">delete_collection</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+</span><span id="line-220">
+</span><span id="line-221">    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="line-222"><span class="w">        </span><span class="sd">"""</span>
+</span><span id="line-223"><span class="sd">        Returns the number of collections in the client.</span>
+</span><span id="line-224"><span class="sd">        """</span>
+</span><span id="line-225">        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">list_collections</span><span class="p">())</span>
+</span><span id="line-226">
+</span><span id="line-227">    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+</span><span id="line-228"><span class="w">        </span><span class="sd">"""</span>
+</span><span id="line-229"><span class="sd">        Returns True if the client has a collection with the given name.</span>
+</span><span id="line-230"><span class="sd">        """</span>
+</span><span id="line-231">        <span class="n">existing_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span id="line-232">        <span class="k">return</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">existing_names</span>
+</span><span id="line-233">
 <div class="viewcode-block" id="ChromaClient.clear">
 <a class="viewcode-back" href="../../_autosummary/chromadol.base.html#chromadol.base.ChromaClient.clear">[docs]</a>
-</span><span id="line-225">    <span class="k">def</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="line-226"><span class="w">        </span><span class="sd">"""</span>
-</span><span id="line-227"><span class="sd">        This method is here, in fact, to disable the clear method, that would</span>
-</span><span id="line-228"><span class="sd">        otherwise be inherited from MutableMapping.</span>
-</span><span id="line-229"><span class="sd">        It's existence is too dangerous, as it would delete all collections in the</span>
-</span><span id="line-230"><span class="sd">        client.</span>
-</span><span id="line-231"><span class="sd">        If you want to actually delete all collections in the client, do so explicitly</span>
-</span><span id="line-232"><span class="sd">        by iterating over the client and deleting each collection, as such:</span>
-</span><span id="line-233">
-</span><span id="line-234"><span class="sd">        &gt;&gt;&gt; for k in chroma_client_instance:  # doctest: +SKIP</span>
-</span><span id="line-235"><span class="sd">        ...     del chroma_client_instance[k]</span>
-</span><span id="line-236">
-</span><span id="line-237"><span class="sd">        """</span>
-</span><span id="line-238">        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">"Disabled for safety reasons."</span><span class="p">)</span></div>
+</span><span id="line-234">    <span class="k">def</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="line-235"><span class="w">        </span><span class="sd">"""</span>
+</span><span id="line-236"><span class="sd">        This method is here, in fact, to disable the clear method, that would</span>
+</span><span id="line-237"><span class="sd">        otherwise be inherited from MutableMapping.</span>
+</span><span id="line-238"><span class="sd">        It's existence is too dangerous, as it would delete all collections in the</span>
+</span><span id="line-239"><span class="sd">        client.</span>
+</span><span id="line-240"><span class="sd">        If you want to actually delete all collections in the client, do so explicitly</span>
+</span><span id="line-241"><span class="sd">        by iterating over the client and deleting each collection, as such:</span>
+</span><span id="line-242">
+</span><span id="line-243"><span class="sd">        &gt;&gt;&gt; for k in chroma_client_instance:  # doctest: +SKIP</span>
+</span><span id="line-244"><span class="sd">        ...     del chroma_client_instance[k]</span>
+</span><span id="line-245">
+</span><span id="line-246"><span class="sd">        """</span>
+</span><span id="line-247">        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">"Disabled for safety reasons."</span><span class="p">)</span></div>
 </div>
 
 </span></code></pre></div>
@@ -431,7 +443,7 @@
 </footer>
     </div>
     
-    <script src="../../_static/documentation_options.js?v=59fadc99"></script>
+    <script src="../../_static/documentation_options.js?v=6e0256f3"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
