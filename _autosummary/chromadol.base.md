@@ -51,6 +51,12 @@ by iterating over the client and deleting each collection, as such:
 
 Bases: [`MutableMapping`](https://docs.python.org/3/library/collections.abc.html#collections.abc.MutableMapping)
 
+#### get_include *: [tuple](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[str](https://docs.python.org/3/builtins/stdtypes.html#str), ...] | [None](https://docs.python.org/3/builtins/constants.html#None)* *= None*
+
+The `include` that reads pass to `collection.get`. `None` keeps
+chromadb’s default (documents and metadatas); a single-field store whose
+field is not in that default (e.g. `uris`) names it here.
+
 ### *class* chromadol.base.ChromaDocuments(collection)
 
 Bases: [`ChromaDocuments`](#chromadol.base.ChromaDocuments)
@@ -79,4 +85,7 @@ Bases: [`ChromaUris`](#chromadol.base.ChromaUris)
 ChromaCollection but reading and writing only the ‘uris’ field.
 
 Writing uris needs a collection created with a `data_loader` (see
-`chromadol.data_loaders`); `chromadb` refuses uris without one.
+`chromadol.data_loaders`): the record is embedded from the data it loads.
+`chromadb` only does that in `add` (`upsert` and `update` embed only
+documents or images), so a new key is added and an existing key is replaced
+(delete, then add, keeping its metadata), and restored if the add fails.

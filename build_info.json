@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-22T14:13:56Z",
+  "built_at": "2026-09-22T14:47:37Z",
   "package": {
     "name": "chromadol",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "display_name": "chromadol",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "108b8da13d4dd315249f47efc0cdbb1a3648ad7c",
-    "short_commit": "108b8da",
+    "commit": "9a3e4aafa42e6d9d238a5414efe0339a11c08cdb",
+    "short_commit": "9a3e4aa",
     "branch": "master",
     "tags": [
-      "0.1.6"
+      "0.1.7"
     ],
     "dirty": false,
     "remote_url": "https://github.com/i2mint/chromadol",
-    "commit_url": "https://github.com/i2mint/chromadol/commit/108b8da13d4dd315249f47efc0cdbb1a3648ad7c",
+    "commit_url": "https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "i2mint/chromadol",
-    "sha": "fab2bc594d0d68b6aa5d2a1977f5c223eca55a7e",
+    "sha": "ddc30a4741b8a5b49d7f9b45d2b824884cc1d4b2",
     "sha_in_history": true,
     "ref": "refs/heads/master",
     "ref_name": "master",
-    "run_id": "35738559617",
-    "run_url": "https://github.com/i2mint/chromadol/actions/runs/35738559617",
+    "run_id": "35742467001",
+    "run_url": "https://github.com/i2mint/chromadol/actions/runs/35742467001",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -58,15 +58,15 @@
   },
   "site": {
     "modules_documented": 4,
-    "objects_documented": 18
+    "objects_documented": 19
   },
   "pypi": {
     "checked": true,
-    "latest": "0.1.6",
+    "latest": "0.1.7",
     "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/i2mint/chromadol && cd chromadol\ngit checkout 108b8da13d4dd315249f47efc0cdbb1a3648ad7c\npip install \"epythet==0.2.12\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/i2mint/chromadol && cd chromadol\ngit checkout 9a3e4aafa42e6d9d238a5414efe0339a11c08cdb\npip install \"epythet==0.2.12\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": true,

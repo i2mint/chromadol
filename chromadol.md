@@ -1,4 +1,4 @@
-> built 2026-09-22 14:13 UTC from 108b8da (master) · chromadol 0.1.6. Details: build_info.json
+> built 2026-09-22 14:47 UTC from 9a3e4aa (master) · chromadol 0.1.7. Details: build_info.json
 
 # index.html.md
 
@@ -204,6 +204,12 @@ by iterating over the client and deleting each collection, as such:
 
 Bases: [`MutableMapping`](https://docs.python.org/3/library/collections.abc.html#collections.abc.MutableMapping)
 
+#### get_include *: [tuple](https://docs.python.org/3/builtins/stdtypes.html#tuple)[[str](https://docs.python.org/3/builtins/stdtypes.html#str), ...] | [None](https://docs.python.org/3/builtins/constants.html#None)* *= None*
+
+The `include` that reads pass to `collection.get`. `None` keeps
+chromadb’s default (documents and metadatas); a single-field store whose
+field is not in that default (e.g. `uris`) names it here.
+
 ### *class* chromadol.base.ChromaDocuments(collection)
 
 Bases: [`ChromaDocuments`](_autosummary/chromadol.base.html.md#chromadol.base.ChromaDocuments)
@@ -232,7 +238,10 @@ Bases: [`ChromaUris`](_autosummary/chromadol.base.html.md#chromadol.base.ChromaU
 ChromaCollection but reading and writing only the ‘uris’ field.
 
 Writing uris needs a collection created with a `data_loader` (see
-`chromadol.data_loaders`); `chromadb` refuses uris without one.
+`chromadol.data_loaders`): the record is embedded from the data it loads.
+`chromadb` only does that in `add` (`upsert` and `update` embed only
+documents or images), so a new key is added and an existing key is replaced
+(delete, then add, keeping its metadata), and restored if the add fails.
 
 
 # _autosummary/chromadol.data_loaders.html.md
@@ -559,7 +568,7 @@ accordingly.
 
 # About this build
 
-This documentation was built on **2026-09-22 14:13 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/108b8da13d4dd315249f47efc0cdbb1a3648ad7c"><code>108b8da</code></a> on branch <code>master</code>, for **chromadol 0.1.6** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-09-22 14:47 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb"><code>9a3e4aa</code></a> on branch <code>master</code>, for **chromadol 0.1.7** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -568,9 +577,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/chromadol/commit/108b8da13d4dd315249f47efc0cdbb1a3648ad7c"><code>108b8da13d4dd315249f47efc0cdbb1a3648ad7c</code></a> |
+| Commit              | <a href="https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb"><code>9a3e4aafa42e6d9d238a5414efe0339a11c08cdb</code></a> |
 | Branch              | <code>master</code>                                                                                                                                     |
-| Tags at this commit | <code>0.1.6</code>                                                                                                                                      |
+| Tags at this commit | <code>0.1.7</code>                                                                                                                                      |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/i2mint/chromadol</code>                                                                                                        |
 
@@ -579,9 +588,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/chromadol</code>                                                              |
-| Run          | <a href="https://github.com/i2mint/chromadol/actions/runs/35738559617">35738559617</a>     |
+| Run          | <a href="https://github.com/i2mint/chromadol/actions/runs/35742467001">35742467001</a>     |
 | Ref          | <code>refs/heads/master</code>                                                             |
-| Event commit | <code>fab2bc594d0d68b6aa5d2a1977f5c223eca55a7e</code> (in the history of the built commit) |
+| Event commit | <code>ddc30a4741b8a5b49d7f9b45d2b824884cc1d4b2</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -606,13 +615,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/chromadol/0.1.6/">0.1.6</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/chromadol/0.1.7/">0.1.7</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/chromadol && cd chromadol
-git checkout 108b8da13d4dd315249f47efc0cdbb1a3648ad7c
+git checkout 9a3e4aafa42e6d9d238a5414efe0339a11c08cdb
 pip install "epythet==0.2.12"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
