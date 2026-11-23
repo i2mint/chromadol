@@ -1,5 +1,5 @@
 {
-  "collection_duration_seconds": 24.763185024261475,
+  "collection_duration_seconds": 26.40987229347229,
   "commit_message": "Merge 5ee2f21403fd30103a9ac80fb15db90f017bd18c into 9a3e4aafa42e6d9d238a5414efe0339a11c08cdb",
   "commit_sha": "71ee95c3571b0ce0be2900d09065d22d28278bc8",
   "metrics": {
@@ -11,29 +11,19 @@
       "statements_total": 0
     },
     "umpyre_stats": {
-      "comment_lines": 86243,
-      "comment_lines_ratio": 0.037924881093099175,
-      "docs_lines": 309632,
-      "empty_lines": 329784,
-      "empty_lines_ratio": 0.14502068557919623,
-      "errors": [
-        "_shape.py: invalid syntax (_shape.py, line 4)",
-        "_array_like.py: invalid syntax (_array_like.py, line 15)",
-        "_nbit.py: invalid syntax (_nbit.py, line 6)",
-        "_scalars.py: invalid syntax (_scalars.py, line 7)",
-        "_char_codes.py: invalid syntax (_char_codes.py, line 3)",
-        "_dtype_like.py: invalid syntax (_dtype_like.py, line 21)",
-        "mypy_plugin.py: invalid syntax (mypy_plugin.py, line 118)"
-      ],
-      "files_analyzed": 5128,
-      "function_lines": 1245244,
-      "function_lines_ratio": 0.5475891449960599,
-      "mean_lines_per_function": 19.181503103867897,
-      "num_classes": 9328,
-      "num_functions": 64919,
+      "comment_lines": 110276,
+      "comment_lines_ratio": 0.038834048849990824,
+      "docs_lines": 494483,
+      "empty_lines": 438546,
+      "empty_lines_ratio": 0.15443538745482313,
+      "files_analyzed": 6088,
+      "function_lines": 1692145,
+      "function_lines_ratio": 0.595894316000469,
+      "mean_lines_per_function": 18.90263519476312,
+      "num_classes": 11585,
+      "num_functions": 89519,
       "pypi_version": "0.1.7",
-      "total_errors": 7,
-      "total_lines": 2274048
+      "total_lines": 2839673
     },
     "wily": {
       "cyclomatic_avg": 0.0,
@@ -52,6 +42,6 @@
   },
   "python_version": "3.10",
   "schema_version": "1.0",
-  "timestamp": "2026-11-23T07:38:55.602669Z",
+  "timestamp": "2026-11-23T07:39:00.510430Z",
   "workflow_status": {}
 }
