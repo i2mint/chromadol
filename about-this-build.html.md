@@ -2,7 +2,7 @@
 
 # About this build
 
-This documentation was built on **2026-09-22 14:47 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb"><code>9a3e4aa</code></a> on branch <code>master</code>, for **chromadol 0.1.7** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-23 07:44 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e"><code>e41b021</code></a> on branch <code>master</code>, for **chromadol 0.1.8** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -11,9 +11,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb"><code>9a3e4aafa42e6d9d238a5414efe0339a11c08cdb</code></a> |
+| Commit              | <a href="https://github.com/i2mint/chromadol/commit/e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e"><code>e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e</code></a> |
 | Branch              | <code>master</code>                                                                                                                                     |
-| Tags at this commit | <code>0.1.7</code>                                                                                                                                      |
+| Tags at this commit | <code>0.1.8</code>                                                                                                                                      |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/i2mint/chromadol</code>                                                                                                        |
 
@@ -22,18 +22,18 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/chromadol</code>                                                              |
-| Run          | <a href="https://github.com/i2mint/chromadol/actions/runs/35742467001">35742467001</a>     |
+| Run          | <a href="https://github.com/i2mint/chromadol/actions/runs/45132956856">45132956856</a>     |
 | Ref          | <code>refs/heads/master</code>                                                             |
-| Event commit | <code>ddc30a4741b8a5b49d7f9b45d2b824884cc1d4b2</code> (in the history of the built commit) |
+| Event commit | <code>e9e715c7d86df3d87aa19d90de22eaef253bbc87</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.12  |
-| Sphinx   | 9.1.0   |
+| epythet  | 0.2.24  |
+| Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
-| Python   | 3.12.14 |
+| Python   | 3.12.16 |
 
 ## Configuration as resolved
 
@@ -49,14 +49,14 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/chromadol/0.1.7/">0.1.7</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/chromadol/0.1.8/">0.1.8</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/chromadol && cd chromadol
-git checkout 9a3e4aafa42e6d9d238a5414efe0339a11c08cdb
-pip install "epythet==0.2.12"
+git checkout e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e
+pip install "epythet==0.2.24"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

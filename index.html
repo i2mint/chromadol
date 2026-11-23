@@ -29,7 +29,8 @@
 <meta content="chromadol" property="og:title"/>
 <meta content="chromadol" name="twitter:title"/>
 <link href="_static/pygments.css?v=d75fae25" rel="stylesheet" type="text/css"/>
-<link href="_static/theme.css?v=d6d7c91b" rel="stylesheet" type="text/css"/>
+<link href="_static/theme.css?v=009055c6" rel="stylesheet" type="text/css"/>
+<link href="_static/sphinx_autodoc_typehints.css?v=057ac668" rel="stylesheet" type="text/css"/>
 <link href="_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
 <link href="_static/epythet.css?v=920416d0" rel="stylesheet" type="text/css"/>
 <link href="search.html" rel="search" title="Search"/>
@@ -106,14 +107,14 @@
 <section id="chromadol">
 <h1>chromadol<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#chromadol">¶</a></h1>
 <p>Data Object Layer for ChromaDB</p>
-<p>To install:	<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">chromadol</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">pip<span class="w"> </span>install<span class="w"> </span>chromadol
+</span></code></pre></div>
+</div>
 <p><a class="reference external" href="https://i2mint.github.io/chromadol/" rel="nofollow noopener">Documentation<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a></p>
 </section>
 <section id="example-usage">
 <h1>Example usage<a @click.prevent="window.navigator.clipboard.writeText($el.href); $el.setAttribute('data-tooltip', 'Copied!'); setTimeout(() =&gt; $el.setAttribute('data-tooltip', 'Copy link to this element'), 2000)" aria-label="Copy link to this element" class="headerlink" data-tooltip="Copy link to this element" href="#example-usage">¶</a></h1>
-<p>To make a <code class="docutils literal notranslate"><span class="pre">ChromaClient</span></code> DOL, you can specify a <code class="docutils literal notranslate"><span class="pre">chromadb</span></code> <code class="docutils literal notranslate"><span class="pre">Client</span></code>, <code class="docutils literal notranslate"><span class="pre">PersistentClient</span></code> (etc.)
-instance, or specify a string (which will be interpreted as a path to a directory to
-save the data to in a <code class="docutils literal notranslate"><span class="pre">PersistentClient</span></code> instance).</p>
+<p>To make a <code class="docutils literal notranslate"><span class="pre">ChromaClient</span></code> DOL, you can specify a <code class="docutils literal notranslate"><span class="pre">chromadb</span></code> <code class="docutils literal notranslate"><span class="pre">Client</span></code>, <code class="docutils literal notranslate"><span class="pre">PersistentClient</span></code> (etc.) instance, or specify a string (which will be interpreted as a path to a directory to save the data to in a <code class="docutils literal notranslate"><span class="pre">PersistentClient</span></code> instance).</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">&gt;&gt;&gt; from chromadol import ChromaClient
 </span><span id="line-2">&gt;&gt;&gt; import tempfile, os 
 </span><span id="line-3">&gt;&gt;&gt; with tempfile.TemporaryDirectory() as temp_dir:
@@ -146,10 +147,7 @@ save the data to in a <code class="docutils literal notranslate"><span class="pr
 </span><span id="line-2">[]
 </span></code></pre></div>
 </div>
-<p>So let’s write something.
-Note that <code class="docutils literal notranslate"><span class="pre">chromadb</span></code> is designed to operate on multiple documents at once,
-so the “chromadb-natural” way of specifying it’s keys and contents (and any extras)
-would be like this:</p>
+<p>So let’s write something. Note that <code class="docutils literal notranslate"><span class="pre">chromadb</span></code> is designed to operate on multiple documents at once, so the “chromadb-natural” way of specifying it’s keys and contents (and any extras) would be like this:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">&gt;&gt;&gt; collection[['piece', 'of']] = {
 </span><span id="line-2">...     'documents': ['contents for piece', 'contents for of'],
 </span><span id="line-3">...     'metadatas': [{'author': 'me'}, {'author': 'you'}],
@@ -184,8 +182,7 @@ would be like this:</p>
 </span><span id="line-20">... }
 </span></code></pre></div>
 </div>
-<p>You can also read multiple documents at once.
-But note that the order of the documents is not guaranteed.</p>
+<p>You can also read multiple documents at once. But note that the order of the documents is not guaranteed.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">&gt;&gt;&gt; collection[['piece', 'of']] == collection[['of', 'piece']]
 </span><span id="line-2">True
 </span></code></pre></div>
@@ -206,8 +203,7 @@ But note that the order of the documents is not guaranteed.</p>
 </span><span id="line-13">... }
 </span></code></pre></div>
 </div>
-<p>In fact, see that if you only want to specify the “documents” part of the information,
-you can just write a string instead of a dictionary:</p>
+<p>In fact, see that if you only want to specify the “documents” part of the information, you can just write a string instead of a dictionary:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">&gt;&gt;&gt; collection['cake'] = 'a different cake'
 </span><span id="line-2">&gt;&gt;&gt; assert collection['cake'] == {
 </span><span id="line-3">...     'ids': ['cake'],
@@ -222,7 +218,7 @@ you can just write a string instead of a dictionary:</p>
 <p class="epythet-aggregates">This documentation as a single file: <a href="chromadol.md">chromadol.md</a> (Markdown, for agents).</p>
 
 </section>
-<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-09-22 14:47 UTC from <a href="https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb">9a3e4aa</a> (master) · chromadol 0.1.7 · <a href="about-this-build.html">about this build</a></p>
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-23 07:44 UTC from <a href="https://github.com/i2mint/chromadol/commit/e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e">e41b021</a> (master) · chromadol 0.1.8 · <a href="about-this-build.html">about this build</a></p>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] h-full overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
@@ -241,11 +237,11 @@ you can just write a string instead of a dictionary:</p>
 </div>
 </footer>
 </div>
-<script src="_static/documentation_options.js?v=ca7ad2ea"></script>
+<script src="_static/documentation_options.js?v=22607128"></script>
 <script src="_static/doctools.js?v=fd6eb6e6"></script>
 <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
 <script src="_static/clipboard.min.js?v=a7894cd8"></script>
 <script src="_static/copybutton.js?v=fd10adb8"></script>
-<script defer="defer" src="_static/theme.js?v=5db23cf8"></script>
+<script defer="defer" src="_static/theme.js?v=49cc6205"></script>
 </body>
 </html>

@@ -4,15 +4,15 @@
 
 Data Object Layer for ChromaDB
 
-To install:	`pip install chromadol`
+```bash
+pip install chromadol
+```
 
 [Documentation](https://i2mint.github.io/chromadol/)
 
 # Example usage
 
-To make a `ChromaClient` DOL, you can specify a `chromadb` `Client`, `PersistentClient` (etc.)
-instance, or specify a string (which will be interpreted as a path to a directory to
-save the data to in a `PersistentClient` instance).
+To make a `ChromaClient` DOL, you can specify a `chromadb` `Client`, `PersistentClient` (etc.) instance, or specify a string (which will be interpreted as a path to a directory to save the data to in a `PersistentClient` instance).
 
 ```none
 >>> from chromadol import ChromaClient
@@ -57,10 +57,7 @@ Here’s nothing in the collection yet:
 []
 ```
 
-So let’s write something.
-Note that `chromadb` is designed to operate on multiple documents at once,
-so the “chromadb-natural” way of specifying it’s keys and contents (and any extras)
-would be like this:
+So let’s write something. Note that `chromadb` is designed to operate on multiple documents at once, so the “chromadb-natural” way of specifying it’s keys and contents (and any extras) would be like this:
 
 ```none
 >>> collection[['piece', 'of']] = {
@@ -101,8 +98,7 @@ Note, though, that the order of the documents is not guaranteed.
 ... }
 ```
 
-You can also read multiple documents at once.
-But note that the order of the documents is not guaranteed.
+You can also read multiple documents at once. But note that the order of the documents is not guaranteed.
 
 ```none
 >>> collection[['piece', 'of']] == collection[['of', 'piece']]
@@ -127,8 +123,7 @@ You can read or write one document at a time too.
 ... }
 ```
 
-In fact, see that if you only want to specify the “documents” part of the information,
-you can just write a string instead of a dictionary:
+In fact, see that if you only want to specify the “documents” part of the information, you can just write a string instead of a dictionary:
 
 ```none
 >>> collection['cake'] = 'a different cake'

@@ -31,6 +31,9 @@ Delegates all attributes to the wrapped object
 
 Add to collection if not already there.
 
+* **Return type:**
+  [`None`](https://docs.python.org/3/builtins/constants.html#None)
+
 ### chromadol.util.argument_value(argname, func, args, kwargs)
 
 Extract the argument value from a function call, or the default if not given.
@@ -52,7 +55,7 @@ Note that this
 The identity function. Returns what it is given.
 
 * **Return type:**
-  [`TypeVar`](https://docs.python.org/3/library/typing.html#typing.TypeVar)(`T`)
+  `T`
 
 ### chromadol.util.keep_only_include_keys(method)
 
@@ -93,13 +96,13 @@ This is useful, for instance, for making a data loader from any single-uri loade
 
 return a subdict with only the given keys
 
-* **Return type:**
-  [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)
-
 ```pycon
 >>> subdict(dict(a=1, b=2, c=3), ['a', 'c'])
 {'a': 1, 'c': 3}
 ```
+
+* **Return type:**
+  [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)
 
 ### chromadol.util.transform_methods_to_keep_only_include_keys(instance, method_names=('get', 'query'))
 

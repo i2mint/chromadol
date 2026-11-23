@@ -1,41 +1,41 @@
 {
   "schema_version": 1,
-  "built_at": "2026-09-22T14:47:37Z",
+  "built_at": "2026-11-23T07:44:14Z",
   "package": {
     "name": "chromadol",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "display_name": "chromadol",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "9a3e4aafa42e6d9d238a5414efe0339a11c08cdb",
-    "short_commit": "9a3e4aa",
+    "commit": "e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e",
+    "short_commit": "e41b021",
     "branch": "master",
     "tags": [
-      "0.1.7"
+      "0.1.8"
     ],
     "dirty": false,
     "remote_url": "https://github.com/i2mint/chromadol",
-    "commit_url": "https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb",
+    "commit_url": "https://github.com/i2mint/chromadol/commit/e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "i2mint/chromadol",
-    "sha": "ddc30a4741b8a5b49d7f9b45d2b824884cc1d4b2",
+    "sha": "e9e715c7d86df3d87aa19d90de22eaef253bbc87",
     "sha_in_history": true,
     "ref": "refs/heads/master",
     "ref_name": "master",
-    "run_id": "35742467001",
-    "run_url": "https://github.com/i2mint/chromadol/actions/runs/35742467001",
+    "run_id": "45132956856",
+    "run_url": "https://github.com/i2mint/chromadol/actions/runs/45132956856",
     "server_url": "https://github.com"
   },
   "tools": {
-    "epythet": "0.2.12",
-    "sphinx": "9.1.0",
+    "epythet": "0.2.24",
+    "sphinx": "9.1.1",
     "docutils": "0.22.4",
-    "python": "3.12.14"
+    "python": "3.12.16"
   },
   "config": {
     "theme": "auto",
@@ -62,11 +62,11 @@
   },
   "pypi": {
     "checked": true,
-    "latest": "0.1.7",
+    "latest": "0.1.8",
     "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/i2mint/chromadol && cd chromadol\ngit checkout 9a3e4aafa42e6d9d238a5414efe0339a11c08cdb\npip install \"epythet==0.2.12\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/i2mint/chromadol && cd chromadol\ngit checkout e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e\npip install \"epythet==0.2.24\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": true,

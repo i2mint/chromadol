@@ -1,4 +1,4 @@
-> built 2026-09-22 14:47 UTC from 9a3e4aa (master) · chromadol 0.1.7. Details: build_info.json
+> built 2026-11-23 07:44 UTC from e41b021 (master) · chromadol 0.1.8. Details: build_info.json
 
 # index.html.md
 
@@ -8,15 +8,15 @@
 
 Data Object Layer for ChromaDB
 
-To install:	`pip install chromadol`
+```bash
+pip install chromadol
+```
 
 [Documentation](https://i2mint.github.io/chromadol/)
 
 # Example usage
 
-To make a `ChromaClient` DOL, you can specify a `chromadb` `Client`, `PersistentClient` (etc.)
-instance, or specify a string (which will be interpreted as a path to a directory to
-save the data to in a `PersistentClient` instance).
+To make a `ChromaClient` DOL, you can specify a `chromadb` `Client`, `PersistentClient` (etc.) instance, or specify a string (which will be interpreted as a path to a directory to save the data to in a `PersistentClient` instance).
 
 ```none
 >>> from chromadol import ChromaClient
@@ -61,10 +61,7 @@ Here’s nothing in the collection yet:
 []
 ```
 
-So let’s write something.
-Note that `chromadb` is designed to operate on multiple documents at once,
-so the “chromadb-natural” way of specifying it’s keys and contents (and any extras)
-would be like this:
+So let’s write something. Note that `chromadb` is designed to operate on multiple documents at once, so the “chromadb-natural” way of specifying it’s keys and contents (and any extras) would be like this:
 
 ```none
 >>> collection[['piece', 'of']] = {
@@ -105,8 +102,7 @@ Note, though, that the order of the documents is not guaranteed.
 ... }
 ```
 
-You can also read multiple documents at once.
-But note that the order of the documents is not guaranteed.
+You can also read multiple documents at once. But note that the order of the documents is not guaranteed.
 
 ```none
 >>> collection[['piece', 'of']] == collection[['of', 'piece']]
@@ -131,8 +127,7 @@ You can read or write one document at a time too.
 ... }
 ```
 
-In fact, see that if you only want to specify the “documents” part of the information,
-you can just write a string instead of a dictionary:
+In fact, see that if you only want to specify the “documents” part of the information, you can just write a string instead of a dictionary:
 
 ```none
 >>> collection['cake'] = 'a different cake'
@@ -267,7 +262,7 @@ Data loaders for ChromaDB.
 
 ### *class* chromadol.data_loaders.FileLoader(loader=<function load_text>, \*, prefix='', suffix='', max_workers=4)
 
-Bases: `DataLoader`[[`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | [`bytes`](https://docs.python.org/3/builtins/stdtypes.html#bytes) | [`None`](https://docs.python.org/3/builtins/constants.html#None)]]
+Bases: `DataLoader`[[`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`bytes`](https://docs.python.org/3/builtins/stdtypes.html#bytes), [`None`](https://docs.python.org/3/builtins/constants.html#None)]]]
 
 A DataLoader that loads a list of text files from a list of URIs.
 
@@ -486,6 +481,9 @@ Delegates all attributes to the wrapped object
 
 Add to collection if not already there.
 
+* **Return type:**
+  [`None`](https://docs.python.org/3/builtins/constants.html#None)
+
 ### chromadol.util.argument_value(argname, func, args, kwargs)
 
 Extract the argument value from a function call, or the default if not given.
@@ -507,7 +505,7 @@ Note that this
 The identity function. Returns what it is given.
 
 * **Return type:**
-  [`TypeVar`](https://docs.python.org/3/library/typing.html#typing.TypeVar)(`T`)
+  `T`
 
 ### chromadol.util.keep_only_include_keys(method)
 
@@ -548,13 +546,13 @@ This is useful, for instance, for making a data loader from any single-uri loade
 
 return a subdict with only the given keys
 
-* **Return type:**
-  [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)
-
 ```pycon
 >>> subdict(dict(a=1, b=2, c=3), ['a', 'c'])
 {'a': 1, 'c': 3}
 ```
+
+* **Return type:**
+  [`dict`](https://docs.python.org/3/builtins/stdtypes.html#dict)
 
 ### chromadol.util.transform_methods_to_keep_only_include_keys(instance, method_names=('get', 'query'))
 
@@ -568,7 +566,7 @@ accordingly.
 
 # About this build
 
-This documentation was built on **2026-09-22 14:47 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb"><code>9a3e4aa</code></a> on branch <code>master</code>, for **chromadol 0.1.7** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-23 07:44 UTC** from commit <a href="https://github.com/i2mint/chromadol/commit/e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e"><code>e41b021</code></a> on branch <code>master</code>, for **chromadol 0.1.8** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -577,9 +575,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                         |
 |---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/chromadol/commit/9a3e4aafa42e6d9d238a5414efe0339a11c08cdb"><code>9a3e4aafa42e6d9d238a5414efe0339a11c08cdb</code></a> |
+| Commit              | <a href="https://github.com/i2mint/chromadol/commit/e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e"><code>e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e</code></a> |
 | Branch              | <code>master</code>                                                                                                                                     |
-| Tags at this commit | <code>0.1.7</code>                                                                                                                                      |
+| Tags at this commit | <code>0.1.8</code>                                                                                                                                      |
 | Working tree        | clean                                                                                                                                                   |
 | Remote              | <code>https://github.com/i2mint/chromadol</code>                                                                                                        |
 
@@ -588,18 +586,18 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/chromadol</code>                                                              |
-| Run          | <a href="https://github.com/i2mint/chromadol/actions/runs/35742467001">35742467001</a>     |
+| Run          | <a href="https://github.com/i2mint/chromadol/actions/runs/45132956856">45132956856</a>     |
 | Ref          | <code>refs/heads/master</code>                                                             |
-| Event commit | <code>ddc30a4741b8a5b49d7f9b45d2b824884cc1d4b2</code> (in the history of the built commit) |
+| Event commit | <code>e9e715c7d86df3d87aa19d90de22eaef253bbc87</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.12  |
-| Sphinx   | 9.1.0   |
+| epythet  | 0.2.24  |
+| Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
-| Python   | 3.12.14 |
+| Python   | 3.12.16 |
 
 ## Configuration as resolved
 
@@ -615,14 +613,14 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/chromadol/0.1.7/">0.1.7</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/chromadol/0.1.8/">0.1.8</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/chromadol && cd chromadol
-git checkout 9a3e4aafa42e6d9d238a5414efe0339a11c08cdb
-pip install "epythet==0.2.12"
+git checkout e41b02151d7dc3c1d7a43c06a18fc9e73d9c862e
+pip install "epythet==0.2.24"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

@@ -19,7 +19,7 @@ Data loaders for ChromaDB.
 
 ### *class* chromadol.data_loaders.FileLoader(loader=<function load_text>, \*, prefix='', suffix='', max_workers=4)
 
-Bases: `DataLoader`[[`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str) | [`bytes`](https://docs.python.org/3/builtins/stdtypes.html#bytes) | [`None`](https://docs.python.org/3/builtins/constants.html#None)]]
+Bases: `DataLoader`[[`list`](https://docs.python.org/3/builtins/stdtypes.html#list)[[`Union`](https://docs.python.org/3/library/typing.html#typing.Union)[[`str`](https://docs.python.org/3/builtins/stdtypes.html#str), [`bytes`](https://docs.python.org/3/builtins/stdtypes.html#bytes), [`None`](https://docs.python.org/3/builtins/constants.html#None)]]]
 
 A DataLoader that loads a list of text files from a list of URIs.
 
