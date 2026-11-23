@@ -1,8 +1,8 @@
 metric,value
 schema_version,1.0
-timestamp,2026-11-23T07:37:40.323033Z
-commit_sha,5ee2f21403fd30103a9ac80fb15db90f017bd18c
-commit_message,"docs(readme): install block, unwrapped"
+timestamp,2026-11-23T07:38:55.602669Z
+commit_sha,71ee95c3571b0ce0be2900d09065d22d28278bc8
+commit_message,Merge 5ee2f21403fd30103a9ac80fb15db90f017bd18c into 9a3e4aafa42e6d9d238a5414efe0339a11c08cdb
 python_version,3.10
 metrics.umpyre_stats.num_functions,64919
 metrics.umpyre_stats.num_classes,9328
@@ -20,9 +20,9 @@ metrics.umpyre_stats.pypi_version,0.1.7
 metrics.umpyre_stats.errors,"['_shape.py: invalid syntax (_shape.py, line 4)', '_array_like.py: invalid syntax (_array_like.py, line 15)', '_nbit.py: invalid syntax (_nbit.py, line 6)', '_scalars.py: invalid syntax (_scalars.py, line 7)', '_char_codes.py: invalid syntax (_char_codes.py, line 3)', '_dtype_like.py: invalid syntax (_dtype_like.py, line 21)', 'mypy_plugin.py: invalid syntax (mypy_plugin.py, line 118)']"
 metrics.umpyre_stats.total_errors,7
 metrics.workflow_status.last_run_status,success
-metrics.workflow_status.last_success_timestamp,2026-09-22T14:49:22Z
+metrics.workflow_status.last_success_timestamp,2026-11-23T07:37:45Z
 metrics.workflow_status.recent_failure_count,0
-metrics.workflow_status.run_url,https://github.com/i2mint/chromadol/actions/runs/35742803942
+metrics.workflow_status.run_url,https://github.com/i2mint/chromadol/actions/runs/45132313751
 metrics.workflow_status.total_runs_analyzed,10
 metrics.wily.cyclomatic_avg,0.0
 metrics.wily.maintainability_index,0.0
@@ -38,4 +38,4 @@ metrics.coverage.branch_coverage,0.0
 metrics.coverage.statements_covered,0
 metrics.coverage.statements_total,0
 metrics.coverage.error,No coverage file found
-collection_duration_seconds,25.002845764160156
+collection_duration_seconds,24.763185024261475
